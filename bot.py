@@ -4,6 +4,7 @@ from fileforlists import responses,url_giver,comment_and_name_shower,comments_an
 import random
 import time
 from datetime import date
+import asyncio
 
 client = commands.Bot(command_prefix='`')
 
@@ -95,10 +96,10 @@ async def dmstuff(ctx, user: discord.User, *, message=None):
 async def dm(ctx, user: discord.User, timetomention):
     if timetomention.isnumeric():
         await ctx.send(f"Nyan Nyan! Goshujin-Sama I will dm you after {timetomention} seconds")
-        time.sleep(int(timetomention))
+        await asyncio.sleep(int(timetomention))
         await user.send("It's time")
     else:
-        await ctx.send("Input time in seconds Dumbass")
+        await ctx.send("Input time in seconds")
     
 @client.command()
 async def sec2min(ctx,minutes):
