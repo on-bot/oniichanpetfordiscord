@@ -29,7 +29,11 @@ async def ping(ctx):
 @client.command(aliases=['guess','predict','say'])
 async def Guess(ctx, *,question):
     await ctx.send(f'Question: {question}?\nAnswer: {random.choice(responses)}')
-
+    
+@client.event
+async def on_command_error(ctx, error):
+    await ctx.send(f'Error. Try .help ({error})')
+    print('error')
     
 @client.command()
 async def clear(ctx, amount=0):
@@ -100,15 +104,31 @@ async def dm(ctx, user: discord.User, timetomention):
         await user.send("It's time")
     else:
         await ctx.send("Input time in seconds")
-    
+
 @client.command()
-async def sec2min(ctx,minutes):
+async def m2s(ctx,minutes):
     if minutes.isnumeric():
         seconds = int(minutes) * 60
         await ctx.send(f'{minutes} minutes is {seconds} seconds')
     else:
         await ctx.send("Are ya dumb?")
 
+@client.command()
+async def mentionafter(ctx, timetomention,user: discord.User):
+    if timetomention.isnumeric():
+        await ctx.send(f"Nyan Nyan! Goshujin-Sama I will mention you after {timetomention} seconds")
+        await asyncio.sleep(int(timetomention))
+        await ctx.send(f"Moshi Moshi {user.mention} Soko ni imasuka?")
+    else:
+        await ctx.send("Input time in seconds dumbass")
+
+@client.command()
+async def h2s(ctx,hours):
+    if hours.isnumeric():
+        seconds = int(hours) * 60 *60
+        await ctx.send(f'{hours} hours is {seconds} seconds')
+    else:
+        await ctx.send("Are ya dumb?")
 
 nk='NzYwMzMwMDIzNzc2'
 bk='NDE5ODUw.X3Kegw.x8NfyLNv'
