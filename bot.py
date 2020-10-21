@@ -1,140 +1,90 @@
 import discord
-from discord.ext import commands
-from fileforlists import responses,url_giver,comment_and_name_shower,comments_and_username_list
-import random
-import time
-from datetime import date
-import asyncio
+from discord.ext import commands,tasks
+from itertools import cycle
+import os
+import json
 
-client = commands.Bot(command_prefix='`')
+#to_get_prefix
+def get_prefix(client,message):
+    with open('prefixes.json','r') as f:
+        prefixes = json.load(f)
+    return prefixes[str(message.guild.id)]
 
+#setting prefix
+client = commands.Bot(command_prefix=get_prefix)
+client.remove_command('help')
+
+#status for bot to loop through
+status = cycle(['With OniiChan PP','Yamete OniiChan','OniiChan Just touched my nono part'])
+
+#setting prefix while joining server
+@client.event
+async def on_guild_join(guild):
+    with open('prefixes.json','r') as f:
+        prefixes = json.load(f)
+    
+    prefixes[str(guild.id)] = '/'
+
+    with open('prefixes.json','w') as f:
+        json.dump(prefixes,f,indent=4)
+
+#removing prefix while leaving server
+@client.event
+async def on_guild_remove(guild):
+    with open('prefixes.json','r') as f:
+        prefixes = json.load(f)
+    prefixes.pop(str(guild.id))
+    with open('prefixes.json','w') as f:
+        json.dump(prefixes,f,indent=4)
+
+#changing server prefix through command
+@client.command()
+async def changeprefix(ctx,prefix):
+    with open('prefixes.json','r') as f:
+        prefixes = json.load(f)
+    prefixes[str(ctx.guild.id)] = prefix
+    
+    with open('prefixes.json','w') as f:
+        json.dump(prefixes,f,indent=4)
+
+    await ctx.send(f'Prefix has been changed to {prefix}')
+
+#making bot do stufs when it is online
 @client.event
 async def on_ready():
-    print("Onii-Chan Yamete!")
-    await client.change_presence(status="Online",activity=discord.Game("With OniiChan PP"))
+    print("starto")
+    await client.change_presence(status=discord.Status.idle,activity=discord.Game("With OniiChan PP"))
 
-
-@client.event
-async def on_member_join(member):
-    print(f'{member} has joined the server.')
-
-@client.event
-async def on_member_remove(member):
-    print(f'{member} has left the server')
+#to make bot change status every mentioned seconds
+@tasks.loop(seconds=5)
+async def status_changer():
+    await client.change_presence(status=discord.Status.idle,activity=discord.Game(next(status)))
 
 @client.command()
-async def ping(ctx):
-    await ctx.send(f'OwO! {round(client.latency*1000)} ms')
-
-@client.command(aliases=['guess','predict','say'])
-async def Guess(ctx, *,question):
-    await ctx.send(f'Question: {question}?\nAnswer: {random.choice(responses)}')
-    
-@client.event
-async def on_command_error(ctx, error):
-    await ctx.send(f'Error. Try .help ({error})')
-    print('error')
-    
-@client.command()
-async def clear(ctx, amount=0):
-    if (ctx.message.author.permissions_in(ctx.message.channel).manage_messages):
-        await ctx.channel.purge(limit= amount+1)
-        await ctx.send(f'I have deleted {amount} messages')
-        time.sleep(2)
-        await ctx.channel.purge(limit = 1)
-
-@clear.error
-async def clear_error(ctx, error):
-    if isinstance(error, commands.MissingPermissions):
-        await ctx.send('Sorry you are not allowed to use this command.')
-
-
-
-@client.command() 
-async def kick(ctx, member : discord.Member, * , reason=None): 
-    await member.kick(reason=reason)
-    await ctx.send(f'{member} has been kicked')
+async def load(ctx,extension):
+    client.load_extension(f'cogs.{extension}')
+    await ctx.send(f'{extension} has been loaded')
 
 @client.command()
-async def ban(ctx, member : discord.Member, * ,reason = None):
-    await member.ban(reason=reason)
-    await ctx.send(f'{member} has been banned')
+async def unload(ctx,extension):
+    client.unload_extension(f'cogs.{extension}')
+    await ctx.send(f'{extension} has been unloaded')
 
 @client.command()
-async def unban(ctx, * ,member):
-    banned_users = await ctx.guild.bans()
-    member_name , member_discriminator = member.split('#')
-    for ban_entry in banned_users:
-        user = ban_entry.user
+async def reload(ctx,extension):
+    client.unload_extension(f'cogs.{extension}')
+    client.load_extension(f'cogs.{extension}')
+    await ctx.send(f'{extension} has been reloaded')
 
-        if (user.name,user.discriminator) == (member_name,member_discriminator):
-            await ctx.guild.unban(user)
-            await ctx.send(f'Unbanned {user.name}#{user.discriminator}')
-            return 
+for filename in os.listdir('./cogs'):
+    if filename.endswith('.py'):
+        client.load_extension(f'cogs.{filename[:-3]}')
 
-@client.command()
-async def redditcomments(ctx,*,url,amount=5):
-    try:
-        url_giver(url)
-        comment_and_name_shower()
-        count = 0
-        for one_comment in comments_and_username_list:
-            await ctx.send(one_comment)
-            count += 1
-            if count == amount:
-                break
-    except:
-        await ctx.send("Url isnt valid")
+nk = 'NzYwMzMwMDIzNzc2'
+bk = 'NDE5ODUw.X3Kegw.x8NfyLNv'
+ck = 'oJnH0uk1uSPzsUZfkco '
 
-@client.command()
-async def todaydate(ctx):
-    await ctx.send(date.today())
-
-
-@client.command()
-async def dmstuff(ctx, user: discord.User, *, message=None):
-    message = message or "This Message is sent via DM"
-    await user.send(message)
-
-@client.command()
-async def dm(ctx, user: discord.User, timetomention):
-    if timetomention.isnumeric():
-        await ctx.send(f"Nyan Nyan! Goshujin-Sama I will dm you after {timetomention} seconds")
-        await asyncio.sleep(int(timetomention))
-        await user.send("It's time")
-    else:
-        await ctx.send("Input time in seconds")
-
-@client.command()
-async def m2s(ctx,minutes):
-    if minutes.isnumeric():
-        seconds = int(minutes) * 60
-        await ctx.send(f'{minutes} minutes is {seconds} seconds')
-    else:
-        await ctx.send("Are ya dumb?")
-
-@client.command()
-async def mentionafter(ctx, timetomention,user: discord.User):
-    if timetomention.isnumeric():
-        await ctx.send(f"Nyan Nyan! Goshujin-Sama I will mention you after {timetomention} seconds")
-        await asyncio.sleep(int(timetomention))
-        await ctx.send(f"Moshi Moshi {user.mention} Soko ni imasuka?")
-    else:
-        await ctx.send("Input time in seconds dumbass")
-
-@client.command()
-async def h2s(ctx,hours):
-    if hours.isnumeric():
-        seconds = int(hours) * 60 *60
-        await ctx.send(f'{hours} hours is {seconds} seconds')
-    else:
-        await ctx.send("Are ya dumb?")
-
-nk='NzYwMzMwMDIzNzc2'
-bk='NDE5ODUw.X3Kegw.x8NfyLNv'
-ck='oJnH0uk1uSPzsUZfkco ' 
-    
-endd=nk+bk+ck
+endd = nk + bk + ck
 
 client.run(endd)
 
