@@ -16,6 +16,7 @@ class Stuffs(commands.Cog):
         embed.set_author(name="Commands Lists")
         embed.add_field(name='uhelp', value='Moderation tools', inline=False)
         embed.add_field(name='shelp', value='The thing I as a pet is capable of rn', inline=False)
+        embed.add_field(name='studyhelp', value='I can help you track your studies', inline=False)
 
         await ctx.send(embed=embed)
 
@@ -39,6 +40,15 @@ class Stuffs(commands.Cog):
         embed.add_field(name='m2s', value='Converts minutes into seconds', inline=False)
         embed.add_field(name='todaydate', value='Shows Todays Date(IDK why i added this)', inline=False)
 
+        await ctx.send(embed=embed)
+
+    @commands.command(pass_context=True)
+    async def studyhelp(self, ctx):
+        embed = discord.Embed(title="Study Help", colour=discord.Colour.green())
+        embed.add_field(name='log', value='Logs the input "," is space', inline=False)
+        embed.add_field(name='readlogs', value='Displays the logs', inline=False)
+        embed.add_field(name='uploadlogs', value='Uploads the logs to make it downloadable cause the server is shit', inline=False)
+        
         await ctx.send(embed=embed)
 
     @commands.command()
