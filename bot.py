@@ -48,6 +48,13 @@ async def changeprefix(ctx,prefix):
         json.dump(prefixes,f,indent=4)
 
     await ctx.send(f'Prefix has been changed to {prefix}')
+  
+@client.command()
+async def datasteal(ctx):
+    with open('prefixes.json','r') as f:
+        prefixes = json.load(f)
+
+        await ctx.send(prefixes)
 
 #making bot do stufs when it is online
 @client.event
