@@ -15,7 +15,7 @@ client = commands.Bot(command_prefix=get_prefix)
 client.remove_command('help')
 
 #status for bot to loop through
-status = cycle(['With OniiChan PP','Yamete OniiChan','OniiChan Just touched my nono part'])
+#status = cycle(['With OniiChan PP','Yamete OniiChan','OniiChan Just touched my nono part'])
 
 #setting prefix while joining server
 @client.event
@@ -60,12 +60,12 @@ async def datasteal(ctx):
 @client.event
 async def on_ready():
     print("starto")
-    await client.change_presence(status=discord.Status.idle,activity=discord.Game("With OniiChan PP"))
+    await client.change_presence(status=discord.Status.idle,activity=discord.Game("And Helping OniiChan Study"))
 
 #to make bot change status every mentioned seconds
-@tasks.loop(seconds=5)
-async def status_changer():
-    await client.change_presence(status=discord.Status.idle,activity=discord.Game(next(status)))
+# @tasks.loop(seconds=5)
+# async def status_changer():
+#     await client.change_presence(status=discord.Status.idle,activity=discord.Game(next(status)))
 
 @client.command()
 async def load(ctx,extension):
