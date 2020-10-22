@@ -47,7 +47,7 @@ class Stuffs(commands.Cog):
         await user.send(message)
 
     @commands.command()
-    async def dm(self,ctx, user: discord.User, timetomention):
+    async def dmafter(self,ctx, user: discord.User, timetomention):
         if timetomention.isnumeric():
             await ctx.send(f"Nyan Nyan! Goshujin-Sama I will dm you after {timetomention} seconds")
             await asyncio.sleep(int(timetomention))
