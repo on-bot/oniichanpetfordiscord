@@ -3,8 +3,8 @@
 2020-10-22 13:26:06 Maths Ex Derivatives Principlehalted
 2020-10-22 13:27:24 Maths Ex Numerical Integrations(ex19)
 2020-10-22 14:04:43 Maths Ex Numerical Integrations(ex19)halted(fuck Calculator)
-2020-10-22 14:06:26 Maths Ex Anti Derivatives(ex8)
-2020-10-22 14:44:21 Maths Ex Anti Derivatives(ex8)(8.1
+2020-10-22 14:06:26 Maths Ex Anti Derivatives(ex9)
+2020-10-22 14:44:21 Maths Ex Anti Derivatives(ex9)(9.1
 2020-10-22 14:46:39 Maths Ex Derivatives Principle(resumed)
 2020-10-22 15:04:33 Maths Ex Derivatives Principle(completed)(hyperbolic,rolles&mvtleft)
 2020-10-22 15:04:59 Gg
