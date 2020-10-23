@@ -8,3 +8,5 @@
 2020-10-22 14:46:39 Maths Ex Derivatives Principle(resumed)
 2020-10-22 15:04:33 Maths Ex Derivatives Principle(completed)(hyperbolic,rolles&mvtleft)
 2020-10-22 15:04:59 Gg
+2020-10-22 17:08:14 Maths Ex 8.2 Hyperbolic
+2020-10-22 18:05:12 Maths Ex 8.2 Hyperbolic FinishedIG
