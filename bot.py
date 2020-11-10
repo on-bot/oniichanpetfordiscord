@@ -60,13 +60,21 @@ async def datasteal(ctx):
 @client.event
 async def on_ready():
     print("starto")
-    await client.change_presence(status=discord.Status.idle,activity=discord.Game("And Helping OniiChan Study"))
+    await client.change_presence(status=discord.Status.idle,activity=discord.Game("But You Study"))
+
+
 
 #to make bot change status every mentioned seconds
 # @tasks.loop(seconds=5)
 # async def status_changer():
 #     await client.change_presence(status=discord.Status.idle,activity=discord.Game(next(status)))
 
+#say
+@client.command()
+async def say(ctx,*,sentence):
+    await ctx.channel.purge(limit=1)
+    await ctx.send(sentence)
+    
 @client.command()
 async def load(ctx,extension):
     client.load_extension(f'cogs.{extension}')
