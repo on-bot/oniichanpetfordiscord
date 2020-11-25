@@ -34,7 +34,7 @@ class Stuffs(commands.Cog):
     async def shelp(self, ctx):
         embed = discord.Embed(title="Stuffs Help", colour=discord.Colour.purple())
         embed.add_field(name='dmafter', value='DMs You after the mentioned time(seconds)', inline=False)
-        embed.add_field(name='dmstuffs', value='DMs the mentioned user the written messages <dmstuff @user message>', inline=False)
+        embed.add_field(name='dm', value='DMs the mentioned user the written messages <dmstuff @user message>', inline=False)
         embed.add_field(name='mentionafter',value='Mentions the mentioned user after specified time(seconds) <mentionafter time @user>',inline=False)
         embed.add_field(name='h2s', value='Converts hours into seconds', inline=False)
         embed.add_field(name='m2s', value='Converts minutes into seconds', inline=False)
@@ -52,7 +52,7 @@ class Stuffs(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command()
-    async def dmstuff(self,ctx, user: discord.User, *, message=None):
+    async def dm(self,ctx, user: discord.User, *, message=None):
         message = message or "This Message is sent via DM"
         await user.send(message)
 
