@@ -60,7 +60,7 @@ async def datasteal(ctx):
 @client.event
 async def on_ready():
     print("starto")
-    await client.change_presence(status=discord.Status.idle,activity=discord.Game("But You Study"))
+    await client.change_presence(status=discord.Status.idle,activity=discord.Game("Meow! Meow! Meow!"))
 
 
 
