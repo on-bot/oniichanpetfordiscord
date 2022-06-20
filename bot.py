@@ -1,102 +1,140 @@
+
 import discord
-from discord.ext import commands,tasks
-from itertools import cycle
-import os
-import json
+import sys
+from discord.ext import commands
 
-#to_get_prefix
-def get_prefix(client,message):
-    with open('prefixes.json','r') as f:
-        prefixes = json.load(f)
-    return prefixes[str(message.guild.id)]
+intents = discord.Intents.default()
+intents.members = True
 
-#setting prefix
-client = commands.Bot(command_prefix=get_prefix)
-client.remove_command('help')
+client = commands.Bot(intents=intents, command_prefix='$')
 
-#status for bot to loop through
-#status = cycle(['With OniiChan PP','Yamete OniiChan','OniiChan Just touched my nono part'])
-
-#setting prefix while joining server
-@client.event
-async def on_guild_join(guild):
-    with open('prefixes.json','r') as f:
-        prefixes = json.load(f)
-    
-    prefixes[str(guild.id)] = '/'
-
-    with open('prefixes.json','w') as f:
-        json.dump(prefixes,f,indent=4)
-
-#removing prefix while leaving server
-@client.event
-async def on_guild_remove(guild):
-    with open('prefixes.json','r') as f:
-        prefixes = json.load(f)
-    prefixes.pop(str(guild.id))
-    with open('prefixes.json','w') as f:
-        json.dump(prefixes,f,indent=4)
-
-#changing server prefix through command
+allowlist = 970755295942963200
+wl = 983367913706774589
+smulip = 940207773185105962
+kitten = 900810644561997885
+dead = 976680040098062387
+testsorvor = 744107902587109396
+whitelisted_kitten = 901054830540386354
 @client.command()
-async def changeprefix(ctx,prefix):
-    with open('prefixes.json','r') as f:
-        prefixes = json.load(f)
-    prefixes[str(ctx.guild.id)] = prefix
-    
-    with open('prefixes.json','w') as f:
-        json.dump(prefixes,f,indent=4)
+@commands.has_permissions(manage_roles=True)
+async def customgib(ctx,role:discord.Role):
+    role2_id = allowlist
+    guild_id = smulip
+    guild = client.get_guild(guild_id)
+    role2 = discord.utils.get(guild.roles, id=role2_id)
+    left_over = []
+    successful = []
+    await ctx.send("Reply with discord usernames (follow the format)")
 
-    await ctx.send(f'Prefix has been changed to {prefix}')
-  
-@client.command()
-async def datasteal(ctx):
-    with open('prefixes.json','r') as f:
-        prefixes = json.load(f)
+    def check(m):
+        return m.author.id == ctx.author.id
 
-        await ctx.send(prefixes)
+    message = await client.wait_for('message', check=check, timeout=120)
+    await ctx.send("on it :cat:")
 
-#making bot do stufs when it is online
-@client.event
-async def on_ready():
-    print("starto")
-    await client.change_presence(status=discord.Status.idle,activity=discord.Game("I had a dream It was dark and I Couldnt breathe"))
+    msg = message.content
+    username_list = msg.split('\n')
+    for username in username_list:
+        username = username.rstrip()
+        namez, id = username.split('#')
+        user = discord.utils.get(ctx.guild.members, name=namez, discriminator=id)
+        if user == None:
+            left_over.append(username)
+        else:
+            if role2 in user.roles:
+                await user.remove_roles(role2)
+            await user.add_roles(role)
+            successful.append(username)
+    wled = "**Successful**"
+    for i in successful:
+        wled = wled + "\n" + i
+    nwled = "**Not Found**"
+    for i in left_over:
+        nwled = nwled + "\n" + i
 
-
-
-#to make bot change status every mentioned seconds
-# @tasks.loop(seconds=5)
-# async def status_changer():
-#     await client.change_presence(status=discord.Status.idle,activity=discord.Game(next(status)))
-
-#say
-@client.command()
-async def say(ctx,*,sentence):
-    await ctx.channel.purge(limit=1)
-    await ctx.send(sentence)
-    
-@client.command()
-async def load(ctx,extension):
-    client.load_extension(f'cogs.{extension}')
-    await ctx.send(f'{extension} has been loaded')
+    await ctx.send(wled)
+    await ctx.send(nwled)
 
 @client.command()
-async def unload(ctx,extension):
-    client.unload_extension(f'cogs.{extension}')
-    await ctx.send(f'{extension} has been unloaded')
+@commands.has_permissions(manage_roles=True)
+async def gib(ctx, role: discord.Role):
+    left_over = []
+    successful = []
+    await ctx.send("Reply with discord usernames (follow the format)")
 
-@client.command()
-async def reload(ctx,extension):
-    client.unload_extension(f'cogs.{extension}')
-    client.load_extension(f'cogs.{extension}')
-    await ctx.send(f'{extension} has been reloaded')
+    def check(m):
+        return m.author.id == ctx.author.id
 
-for filename in os.listdir('./cogs'):
-    if filename.endswith('.py'):
-        client.load_extension(f'cogs.{filename[:-3]}')
+    message = await client.wait_for('message', check=check, timeout=120)
+    await ctx.send("on it :cat:")
 
-end = "token"
+    msg = message.content
+    username_list = msg.split('\n')
+    for username in username_list:
+        username = username.rstrip()
+        namez, id = username.split('#')
+        user = discord.utils.get(ctx.guild.members, name=namez, discriminator=id)
+        if user == None:
+            left_over.append(username)
+        else:
+            await user.add_roles(role)
+            successful.append(username)
+    wled = "**Successful**"
+    for i in successful:
+        wled = wled + "\n" + i
+    nwled = "**Not Found**"
+    for i in left_over:
+        nwled = nwled + "\n" + i
 
-client.run(endd)
+    await ctx.send(wled)
+    await ctx.send(nwled)
+
+# @client.event
+# async def on_command_error(ctx, error):
+#     # if command has local error handler, return
+#     if hasattr(ctx.command, 'on_error'):
+#         return
+#
+#     # get the original exception
+#     error = getattr(error, 'original', error)
+#
+#     if isinstance(error, commands.CommandNotFound):
+#         await ctx.send("Command doesnt exist")
+#         return
+#
+#     if isinstance(error, commands.BotMissingPermissions):
+#         missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
+#         if len(missing) > 2:
+#             fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
+#         else:
+#             fmt = ' and '.join(missing)
+#         _message = 'I need the **{}** permission(s) to run this command.'.format(fmt)
+#         await ctx.send(_message)
+#         return
+#
+#     if isinstance(error, commands.MissingPermissions):
+#         missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
+#         if len(missing) > 2:
+#             fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
+#         else:
+#             fmt = ' and '.join(missing)
+#         _message = 'You need the **{}** permission(s) to use this command.'.format(fmt)
+#         await ctx.send(_message)
+#         return
+#
+#
+#     if isinstance(error, commands.CheckFailure):
+#         await ctx.send("You do not have permission to use this command.")
+#         return
+#
+#     # ignore all other exception types, but print them to stderr
+#     print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
+#
+#     if isinstance(error, commands.CheckFailure):
+#         await ctx.send("You do not have permission to use this command.")
+#         return
+#
+#     # ignore all other exception types, but print them to stderr
+#     print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
 
 
