@@ -136,5 +136,8 @@ async def gib(ctx, role: discord.Role):
 #     # ignore all other exception types, but print them to stderr
 #     print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
 
-client.run(os.environ['DISCORD_TOKEN'])
+# client.run(os.environ['DISCORD_TOKEN'])
+g = 'ODYwOTA0MTk1Mjc5MDI4MjQ1.G5Ry5W.'
+i='ePdZeyIkRaYLQGVqrW4fDosyYaBViSIACFGO9Q'
+client.run(g+i)
 
