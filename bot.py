@@ -14,6 +14,7 @@ kitten = 900810644561997885
 dead = 976680040098062387
 testsorvor = 744107902587109396
 whitelisted_kitten = 901054830540386354
+
 @client.command()
 @commands.has_permissions(manage_roles=True)
 async def customgib(ctx,role:discord.Role):
@@ -35,7 +36,10 @@ async def customgib(ctx,role:discord.Role):
     username_list = msg.split('\n')
     for username in username_list:
         username = username.rstrip()
-        namez, id = username.split('#')
+        try:
+            namez, id = username.split('#')
+        except:
+            left_over.append(username)
         user = discord.utils.get(ctx.guild.members, name=namez, discriminator=id)
         if user == None:
             left_over.append(username)
@@ -71,7 +75,11 @@ async def gib(ctx, role: discord.Role):
     username_list = msg.split('\n')
     for username in username_list:
         username = username.rstrip()
-        namez, id = username.split('#')
+        try:
+            namez, id = username.split('#')
+        except:
+            left_over.append(username)
+
         user = discord.utils.get(ctx.guild.members, name=namez, discriminator=id)
         if user == None:
             left_over.append(username)
