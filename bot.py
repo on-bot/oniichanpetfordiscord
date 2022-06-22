@@ -95,7 +95,14 @@ async def gib(ctx, role: discord.Role):
 
     await ctx.send(wled)
     await ctx.send(nwled)
-
+    
+@client.command()
+async def check(ctx,wallet):
+    wallet_list = open('all_wallets.txt', encoding='utf-8').read().splitlines()
+    wallet_list = list(map(lambda x: x.lower(), wallet_list))
+    if wallet.lower() in wallet_list:
+        await ctx.send(f'{ctx.author.mention} u r on list')
+        
 # @client.event
 # async def on_command_error(ctx, error):
 #     # if command has local error handler, return
