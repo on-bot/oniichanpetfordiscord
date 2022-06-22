@@ -101,7 +101,9 @@ async def check(ctx,wallet):
     wallet_list = open('all_wallets.txt', encoding='utf-8').read().splitlines()
     wallet_list = list(map(lambda x: x.lower(), wallet_list))
     if wallet.lower() in wallet_list:
-        await ctx.send(f'{ctx.author.mention} u r on list')
+        await ctx.send(f'{ctx.author.mention} u r on list :cat:')
+    else:
+        await ctx.send(f'{ctx.author.mention} u rnot on list :cat:')
         
 # @client.event
 # async def on_command_error(ctx, error):
