@@ -103,7 +103,7 @@ async def check(ctx,wallet):
     if wallet.lower() in wallet_list:
         await ctx.send(f'{ctx.author.mention} u r on list :cat:')
     else:
-        await ctx.send(f'{ctx.author.mention} u rnot on list :cat:')
+        await ctx.send(f'{ctx.author.mention} u r not on list :cat:')
         
 # @client.event
 # async def on_command_error(ctx, error):
