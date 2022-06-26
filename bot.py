@@ -177,17 +177,7 @@ async def gib(ctx, role: discord.Role):
 
 @client.command()
 async def forgib(ctx):
-    role2_id = 901054830540386354
-    guild_id = 900810644561997885
-    forgib_kitten = 975428824210747392
-    guild = client.get_guild(guild_id)
-    role = discord.utils.get(guild.roles, id=role2_id)
-    role2 = discord.utils.get(guild.roles, id=forgib_kitten)
-    if role2 in ctx.author.roles:
-        await ctx.author.add_roles(role)
-        await ctx.send(f"{ctx.author.mention} Successful, Dont forget to submit wallet")
-    else:
-        await ctx.send("You are not forgiveable kitten")
+    await ctx.send("Too late wallet submission is closed. Try premint raffle")
 
 client.run(os.environ["DISCORD_TOKEN"])
 
