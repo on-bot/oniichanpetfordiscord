@@ -188,6 +188,14 @@ async def check(ctx,wallet):
         await ctx.message.add_reaction('✅')
     else:
         await ctx.message.add_reaction('❌')
+   
+@client.event
+async def on_raw_reaction_add(payload):
+    if payload.channel_id == 900819054053449769:
+        channel = client.get_channel(payload.channel_id)
+        message = await channel.fetch_message(payload.message_id)
+        user = client.get_user(payload.user_id)
+        await message.remove_reaction('🤡',user)
 
 client.run(os.environ["DISCORD_TOKEN"])
 
