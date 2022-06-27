@@ -179,5 +179,13 @@ async def gib(ctx, role: discord.Role):
 async def forgib(ctx):
     await ctx.send("Too late wallet submission is closed. Try premint raffle")
 
+@client.command()
+async def check(ctx,wallet):
+    wallets = open('wallets.txt', encoding='utf-8').read().splitlines()
+    if wallet in wallets:
+        await ctx.message.add_reaction('✅')
+    else:
+        await ctx.message.add_reaction('❌')
+
 client.run(os.environ["DISCORD_TOKEN"])
 
