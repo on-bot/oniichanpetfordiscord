@@ -182,7 +182,8 @@ async def forgib(ctx):
 @client.command()
 async def check(ctx,wallet):
     wallets = open('wallets.txt', encoding='utf-8').read().splitlines()
-    if wallet in wallets:
+    wallets = [wallet.lower for wallet in wallets]
+    if wallet.lower in wallets:
         await ctx.message.add_reaction('✅')
     else:
         await ctx.message.add_reaction('❌')
