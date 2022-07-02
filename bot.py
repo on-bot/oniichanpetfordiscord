@@ -17,49 +17,6 @@ whitelisted_kitten = 901054830540386354
 
 @client.command()
 @commands.has_permissions(manage_roles=True)
-async def customgib(ctx,role:discord.Role):
-    role2_id = allowlist
-    guild_id = smulip
-    guild = client.get_guild(guild_id)
-    role2 = discord.utils.get(guild.roles, id=role2_id)
-    left_over = []
-    successful = []
-    await ctx.send("Reply with discord usernames (follow the format)")
-
-    def check(m):
-        return m.author.id == ctx.author.id
-
-    message = await client.wait_for('message', check=check, timeout=120)
-    await ctx.send("on it :cat:")
-
-    msg = message.content
-    username_list = msg.split('\n')
-    for username in username_list:
-        username = username.rstrip()
-        try:
-            namez, id = username.split('#')
-        except:
-            left_over.append(username)
-        user = discord.utils.get(ctx.guild.members, name=namez, discriminator=id)
-        if user == None:
-            left_over.append(username)
-        else:
-            if role2 in user.roles:
-                await user.remove_roles(role2)
-            await user.add_roles(role)
-            successful.append(username)
-    wled = "**Successful**"
-    for i in successful:
-        wled = wled + "\n" + i
-    nwled = "**Not Found**"
-    for i in left_over:
-        nwled = nwled + "\n" + i
-
-    await ctx.send(wled)
-    await ctx.send(nwled)
-
-@client.command()
-@commands.has_permissions(manage_roles=True)
 async def gib(ctx, role: discord.Role):
     left_over = []
     successful = []
@@ -175,19 +132,7 @@ async def gib(ctx, role: discord.Role):
 #     await ctx.send(f"Successfully done for {len(successful)} users")
 #     await ctx.send(f"Couldn't find {len(left_over)} users")
 
-@client.command()
-async def forgib(ctx):
-    await ctx.send("Too late wallet submission is closed. Try premint raffle")
 
-@client.command()
-async def check(ctx,wallet):
-    wallets = open('wallets.txt', encoding='utf-8').read().splitlines()
-    a = (map(lambda x: x.lower(), wallets))
-    wallets = list(a)
-    if wallet.lower() in wallets:
-        await ctx.message.add_reaction('✅')
-    else:
-        await ctx.message.add_reaction('❌')
    
 @client.event
 async def on_raw_reaction_add(payload):
