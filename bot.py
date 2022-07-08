@@ -193,11 +193,11 @@ async def list(ctx):
             else:
                 author_list.append((user.name + '#' + str(user.discriminator)))
                 successful.append(str(user.id))
-    msg = "Usernames\n"
+    msg = "**Usernames**\n"
     for user in author_list:
         msg = msg + user + "\n"
     await ctx.author.send(msg)
-    msg = "UserIDs\n"
+    msg = "**UserIDs**\n"
     for user_id in successful:
         msg = msg + user_id + "\n"
     await ctx.author.send(msg)
