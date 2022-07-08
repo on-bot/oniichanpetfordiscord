@@ -141,6 +141,67 @@ async def on_raw_reaction_add(payload):
         message = await channel.fetch_message(payload.message_id)
         user = client.get_user(payload.user_id)
         await message.remove_reaction('🤡',user)
+ 
+@client.command()
+@commands.has_permissions(manage_roles=True)
+async def assign(ctx,role:discord.Role):
+    if ctx.message.reference:
+        message = await ctx.fetch_message(id=ctx.message.reference.message_id)
+    else:
+        message_id = 991908762992513064
+        message = await ctx.fetch_message(id=message_id)
+    await ctx.send("on it :cat:")
+    left_over = []
+    successful = []
+    for item in message.content.split(" "):
+        # print(item)
+        temp = ""
+        if item.startswith('<@'):
+            for i in item:
+                if i.isdigit():
+                    temp = temp + i
+            user = ctx.guild.get_member(int(temp))
+            if user == None:
+                left_over.append(str(user))
+            else:
+                await user.add_roles(role)
+                successful.append(str(user))
+    await ctx.send(f"Successfully done for {len(successful)} users")
+    await ctx.send(f"Couldn't find {len(left_over)} users")
+
+@client.command()
+async def list(ctx):
+    if ctx.message.reference:
+        message = await ctx.fetch_message(id=ctx.message.reference.message_id)
+    else:
+        await ctx.send("Please reply to the message")
+        message_id = 991908762992513064
+        message = await ctx.fetch_message(id=message_id)
+    await ctx.send("on it :cat:")
+    left_over = []
+    successful = []
+    author_list = []
+    for item in message.content.split(" "):
+        temp = ""
+        if item.startswith('<@'):
+            for i in item:
+                if i.isdigit():
+                    temp = temp + i
+            user = ctx.guild.get_member(int(temp))
+            if user == None:
+                left_over.append(str(user))
+            else:
+                author_list.append((user.name + '#' + str(user.discriminator)))
+                successful.append(str(user.id))
+    msg = "Usernames\n"
+    for user in author_list:
+        msg = msg + user + "\n"
+    await ctx.author.send(msg)
+    msg = "UserIDs\n"
+    for user_id in successful:
+        msg = msg + user_id + "\n"
+    await ctx.author.send(msg)
+    await ctx.send(f"Check DM")
 
 client.run(os.environ["DISCORD_TOKEN"])
 
