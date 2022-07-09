@@ -203,5 +203,19 @@ async def list(ctx):
     await ctx.author.send(msg)
     await ctx.send(f"Check DM")
 
+@client.event
+async def on_message(message):
+    # print(message.author)
+    if message.guild.id == 989976603243188224:
+        princes = 990559906065182781
+        prince = message.guild.get_role(princes)
+        user = message.author
+        if not prince in user.roles:
+            links = [".com", ".net", ".org", ".co", ".us", ".ml", ".tk", ".ga", ".cf", ".gq", "https"]
+            white = ["tenor"]
+            if any(word in message.content.lower() for word in links) and any(
+                    word not in message.content.lower() for word in white):
+                await message.delete() 
+   
 client.run(os.environ["DISCORD_TOKEN"])
 
