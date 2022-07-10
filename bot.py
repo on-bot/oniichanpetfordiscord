@@ -15,6 +15,7 @@ dead = 976680040098062387
 testsorvor = 744107902587109396
 whitelisted_kitten = 901054830540386354
 
+
 @client.command()
 @commands.has_permissions(manage_roles=True)
 async def gib(ctx, role: discord.Role):
@@ -52,8 +53,8 @@ async def gib(ctx, role: discord.Role):
 
     await ctx.send(wled)
     await ctx.send(nwled)
-    
-        
+
+
 # @client.event
 # async def on_command_error(ctx, error):
 #     # if command has local error handler, return
@@ -133,18 +134,18 @@ async def gib(ctx, role: discord.Role):
 #     await ctx.send(f"Couldn't find {len(left_over)} users")
 
 
-   
 @client.event
 async def on_raw_reaction_add(payload):
     if payload.channel_id == 900819054053449769:
         channel = client.get_channel(payload.channel_id)
         message = await channel.fetch_message(payload.message_id)
         user = client.get_user(payload.user_id)
-        await message.remove_reaction('🤡',user)
- 
+        await message.remove_reaction('🤡', user)
+
+
 @client.command()
 @commands.has_permissions(manage_roles=True)
-async def assign(ctx,role:discord.Role):
+async def assign(ctx, role: discord.Role):
     if ctx.message.reference:
         message = await ctx.fetch_message(id=ctx.message.reference.message_id)
     else:
@@ -168,6 +169,7 @@ async def assign(ctx,role:discord.Role):
                 successful.append(str(user))
     await ctx.send(f"Successfully done for {len(successful)} users")
     await ctx.send(f"Couldn't find {len(left_over)} users")
+
 
 @client.command()
 async def list(ctx):
@@ -203,6 +205,7 @@ async def list(ctx):
     await ctx.author.send(msg)
     await ctx.send(f"Check DM")
 
+
 @client.event
 async def on_message(message):
     if message.guild.id == 989976603243188224:
@@ -225,7 +228,9 @@ async def on_message(message):
                 if any(word in message.content.lower() for word in links) and any(
                         word not in message.content.lower() for word in white):
                     await message.delete()
-  
+    await client.process_commands(message)
+
+
 @client.event
 async def on_message_edit(before, after):
     if after.guild.id == 989976603243188224:
@@ -240,6 +245,6 @@ async def on_message_edit(before, after):
             if any(word in after.content.lower() for word in links) and any(
                     word not in after.content.lower() for word in white):
                 await after.delete()
-   
+
 client.run(os.environ["DISCORD_TOKEN"])
 
