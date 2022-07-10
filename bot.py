@@ -218,6 +218,22 @@ async def on_message(message):
             if any(word in message.content.lower() for word in links) and any(
                     word not in message.content.lower() for word in white):
                 await message.delete() 
+             
+  
+@client.event
+async def on_message_edit(before, after):
+    if message.guild.id == 989976603243188224:
+        princes = 990559906065182781
+        holders = 995499325473947648
+        prince = message.guild.get_role(princes)
+        holder = message.guild.get_role(holders)
+        user = message.author
+        if not prince in user.roles:
+            if before.content != after.content:
+                links = [".com", ".net", ".org", ".co", ".us", ".ml", ".tk", ".ga", ".cf", ".gq", "https","PHASE 2 MINTING LIVE NOW"]
+                white = ["tenor"]
+                if any(word in after.content.lower() for word in links) and any(word not in after.content.lower() for word in white):
+                    await after.delete()
    
 client.run(os.environ["DISCORD_TOKEN"])
 
