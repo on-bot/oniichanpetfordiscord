@@ -212,7 +212,7 @@ async def on_message(message):
         prince = message.guild.get_role(princes)
         holder = message.guild.get_role(holders)
         user = message.author
-        if not prince in user.roles or not holder in user.roles:
+        if not prince in user.roles:
             links = [".com", ".net", ".org", ".co", ".us", ".ml", ".tk", ".ga", ".cf", ".gq", "https","PHASE 2 MINTING LIVE NOW"]
             white = ["tenor"]
             if any(word in message.content.lower() for word in links) and any(
