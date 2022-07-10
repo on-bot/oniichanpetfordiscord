@@ -213,12 +213,17 @@ async def on_message(message):
         holder = message.guild.get_role(holders)
         user = message.author
         if not prince in user.roles:
+            if message.attachments:
+                text = ''.join(str(e) for e in message.attachments)
+                text = text[-3:]
+                if text == "txt":
+                    await message.delete()
+                    return
             links = [".com", ".net", ".org", ".co", ".us", ".ml", ".tk", ".ga", ".cf", ".gq", "https","PHASE 2 MINTING LIVE NOW"]
             white = ["tenor"]
             if any(word in message.content.lower() for word in links) and any(
                     word not in message.content.lower() for word in white):
                 await message.delete() 
-             
   
 @client.event
 async def on_message_edit(before, after):
