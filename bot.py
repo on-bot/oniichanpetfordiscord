@@ -228,6 +228,30 @@ async def on_message(message):
                 if any(word in message.content.lower() for word in links) and any(
                         word not in message.content.lower() for word in white):
                     await message.delete()
+    if message.guild.id == 995429222497652796 and not message.author.bot:
+        if message.channel.id == 996008035757588571:
+            left_over = []
+            successful = []
+            username_list = message.content.split("\n")
+            role = message.guild.get_role(995639674104189010)
+            for username in username_list:
+                username = username.rstrip()
+                namez, id = username.split('#')
+                user = discord.utils.get(message.guild.members, name=namez, discriminator=id)
+                if user == None:
+                    left_over.append(username)
+                else:
+                    await user.add_roles(role)
+                    successful.append(username)
+            wled = "**Successful**"
+            for i in successful:
+                wled = wled + "\n" + i
+            nwled = "**Not Found**"
+            for i in left_over:
+                nwled = nwled + "\n" + i
+
+            await message.channel.send(wled)
+            await message.channel.send(nwled)
     await client.process_commands(message)
 
 
@@ -245,6 +269,7 @@ async def on_message_edit(before, after):
             if any(word in after.content.lower() for word in links) and any(
                     word not in after.content.lower() for word in white):
                 await after.delete()
+                
       
 @client.command()
 async def check(ctx):
