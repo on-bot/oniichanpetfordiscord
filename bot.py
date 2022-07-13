@@ -270,6 +270,18 @@ async def on_message_edit(before, after):
                     word not in after.content.lower() for word in white):
                 await after.delete()
                 
+@client.event
+async def on_message_delete(message):
+    if message.guild.id == 995429222497652796 and message.channel.id == 996008035757588571:
+        channel = client.get_channel(996666624058867774)
+        embed = discord.Embed(
+            colour=discord.Colour.blue(),
+            title=f"Deleted Message by {message.author.name + str(message.author.discriminator)}"
+        )
+        embed.add_field(name="Message:\n", value=message.content, inline=True)
+        embed.timestamp = datetime.datetime.utcnow()
+        embed.set_footer(text='\u200b')
+        await channel.send(embed=embed)
       
 @client.command()
 async def check(ctx):
