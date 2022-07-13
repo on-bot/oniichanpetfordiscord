@@ -277,7 +277,7 @@ async def on_message_delete(message):
         channel = client.get_channel(996666624058867774)
         embed = discord.Embed(
             colour=discord.Colour.blue(),
-            title=f"Deleted Message by {message.author.name + str(message.author.discriminator)}"
+            title=f"Deleted Message by {message.author.name +"#"+ str(message.author.discriminator)}"
         )
         embed.add_field(name="Message:\n", value=message.content, inline=True)
         embed.timestamp = datetime.datetime.utcnow()
