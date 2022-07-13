@@ -245,6 +245,10 @@ async def on_message_edit(before, after):
             if any(word in after.content.lower() for word in links) and any(
                     word not in after.content.lower() for word in white):
                 await after.delete()
+      
+@client.command()
+async def check(ctx):
+    await ctx.send("Working :cat:")
 
 client.run(os.environ["DISCORD_TOKEN"])
 
