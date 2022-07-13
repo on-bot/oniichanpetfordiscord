@@ -2,12 +2,13 @@ import os
 import discord
 import datetime
 from discord.ext import commands
+import sys
 
 intents = discord.Intents.default()
 intents.members = True
 
 client = commands.Bot(intents=intents, command_prefix='mimi ')
-
+client.remove_command('help')
 allowlist = 970755295942963200
 wl = 983367913706774589
 smulip = 940207773185105962
@@ -55,54 +56,92 @@ async def gib(ctx, role: discord.Role):
     await ctx.send(wled)
     await ctx.send(nwled)
 
+@client.command()
+@commands.has_permissions(manage_roles=True)
+async def ungib(ctx, role: discord.Role):
+    left_over = []
+    successful = []
+    await ctx.send("Reply with discord usernames (follow the format)")
 
-# @client.event
-# async def on_command_error(ctx, error):
-#     # if command has local error handler, return
-#     if hasattr(ctx.command, 'on_error'):
-#         return
-#
-#     # get the original exception
-#     error = getattr(error, 'original', error)
-#
-#     if isinstance(error, commands.CommandNotFound):
-#         await ctx.send("Command doesnt exist")
-#         return
-#
-#     if isinstance(error, commands.BotMissingPermissions):
-#         missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
-#         if len(missing) > 2:
-#             fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
-#         else:
-#             fmt = ' and '.join(missing)
-#         _message = 'I need the **{}** permission(s) to run this command.'.format(fmt)
-#         await ctx.send(_message)
-#         return
-#
-#     if isinstance(error, commands.MissingPermissions):
-#         missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
-#         if len(missing) > 2:
-#             fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
-#         else:
-#             fmt = ' and '.join(missing)
-#         _message = 'You need the **{}** permission(s) to use this command.'.format(fmt)
-#         await ctx.send(_message)
-#         return
-#
-#
-#     if isinstance(error, commands.CheckFailure):
-#         await ctx.send("You do not have permission to use this command.")
-#         return
-#
-#     # ignore all other exception types, but print them to stderr
-#     print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
-#
-#     if isinstance(error, commands.CheckFailure):
-#         await ctx.send("You do not have permission to use this command.")
-#         return
-#
-#     # ignore all other exception types, but print them to stderr
-#     print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
+    def check(m):
+        return m.author.id == ctx.author.id
+
+    message = await client.wait_for('message', check=check, timeout=120)
+    await ctx.send("on it :cat:")
+
+    msg = message.content
+    username_list = msg.split('\n')
+    for username in username_list:
+        username = username.rstrip()
+        try:
+            namez, id = username.split('#')
+        except:
+            left_over.append(username)
+
+        user = discord.utils.get(ctx.guild.members, name=namez, discriminator=id)
+        if user == None:
+            left_over.append(username)
+        else:
+            await user.remove_roles(role)
+            successful.append(username)
+    wled = "**Successful**"
+    for i in successful:
+        wled = wled + "\n" + i
+    nwled = "**Not Found**"
+    for i in left_over:
+        nwled = nwled + "\n" + i
+
+    await ctx.send(wled)
+    await ctx.send(nwled)
+
+
+@client.event
+async def on_command_error(ctx, error):
+    # if command has local error handler, return
+    if hasattr(ctx.command, 'on_error'):
+        return
+
+    # get the original exception
+    error = getattr(error, 'original', error)
+
+    if isinstance(error, commands.CommandNotFound):
+        await ctx.send("Command doesnt exist")
+        return
+
+    if isinstance(error, commands.BotMissingPermissions):
+        missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
+        if len(missing) > 2:
+            fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
+        else:
+            fmt = ' and '.join(missing)
+        _message = 'I need the **{}** permission(s) to run this command.'.format(fmt)
+        await ctx.send(_message)
+        return
+
+    if isinstance(error, commands.MissingPermissions):
+        missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
+        if len(missing) > 2:
+            fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
+        else:
+            fmt = ' and '.join(missing)
+        _message = 'You need the **{}** permission(s) to use this command.'.format(fmt)
+        await ctx.send(_message)
+        return
+
+
+    if isinstance(error, commands.CheckFailure):
+        await ctx.send("You do not have permission to use this command.")
+        return
+
+    # ignore all other exception types, but print them to stderr
+    print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
+
+    if isinstance(error, commands.CheckFailure):
+        await ctx.send("You do not have permission to use this command.")
+        return
+
+    # ignore all other exception types, but print them to stderr
+    print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
 
 # @client.command()
 # async def replace(ctx, role: discord.Role, role2: discord.Role):
@@ -133,6 +172,12 @@ async def gib(ctx, role: discord.Role):
 #             f.write(f'{str(temp)}\n')
 #     await ctx.send(f"Successfully done for {len(successful)} users")
 #     await ctx.send(f"Couldn't find {len(left_over)} users")
+
+@client.event
+async def on_ready():
+    await client.change_presence(activity=discord.Game(name="with mimi"))
+    print("Bot is ready!")
+
 
 
 @client.event
@@ -224,7 +269,7 @@ async def on_message(message):
                     return
             if not prince in user.roles:
                 links = [".com", ".net", ".org", ".co", ".us", ".ml", ".tk", ".ga", ".cf", ".gq", "https",
-                         "PHASE 2 MINTING LIVE NOW","http","👉 http","mint.io","arabpunk","arab punk"]
+                         "PHASE 2 MINTING LIVE NOW", "http", "👉 http", "mint.io", "arabpunk", "arab punk"]
                 white = ["tenor"]
                 if any(word in message.content.lower() for word in links) and any(
                         word not in message.content.lower() for word in white):
@@ -237,7 +282,10 @@ async def on_message(message):
             role = message.guild.get_role(995639674104189010)
             for username in username_list:
                 username = username.rstrip()
-                namez, id = username.split('#')
+                try:
+                    namez, id = username.split('#')
+                except:
+                    continue
                 user = discord.utils.get(message.guild.members, name=namez, discriminator=id)
                 if user == None:
                     left_over.append(username)
@@ -250,9 +298,10 @@ async def on_message(message):
             nwled = "**Not Found**"
             for i in left_over:
                 nwled = nwled + "\n" + i
-
-            await message.channel.send(wled)
-            await message.channel.send(nwled)
+            if len(wled) > 15:
+                await message.channel.send(wled)
+            if len(nwled) > 14:
+                await message.channel.send(nwled)
     await client.process_commands(message)
 
 
@@ -270,20 +319,43 @@ async def on_message_edit(before, after):
             if any(word in after.content.lower() for word in links) and any(
                     word not in after.content.lower() for word in white):
                 await after.delete()
-                
+
+
 @client.event
 async def on_message_delete(message):
     if message.guild.id == 995429222497652796 and message.channel.id == 996008035757588571:
         channel = client.get_channel(996666624058867774)
         embed = discord.Embed(
             colour=discord.Colour.blue(),
-            title=f"Deleted Message by {message.author.name + str(message.author.discriminator)}"
+            title=f"Deleted Message by {message.author.name + '#' + str(message.author.discriminator)}"
         )
         embed.add_field(name="Message:\n", value=message.content, inline=True)
         embed.timestamp = datetime.datetime.utcnow()
         embed.set_footer(text='\u200b')
         await channel.send(embed=embed)
-      
+
+@client.command()
+async def clear(ctx,amount=1):
+    await ctx.message.delete()
+    await ctx.channel.purge(limit=amount)
+    await ctx.send(f"Deleted {amount} messages",delete_after=5)
+
+@client.command()
+async def help(ctx):
+    help_e = discord.Embed(
+        colour=discord.Colour.orange()
+    )
+    help_e.set_author(name="Bot prefix = mimi ")
+    help_e.add_field(name="gib <Role>", value="It will give chosen role to the list of usernames", inline=False)
+    help_e.add_field(name="ungib <Role>", value="It will remove chosen role from the list of usernames", inline=False)
+    help_e.add_field(name="assign <Role>", value="Reply to the message with this command and it will give the chosen "
+                                                 "role to all the mentioned users in the message",inline=False)
+    help_e.add_field(name="list", value="Reply to the message with this command and it will dm you the "
+                                        "userid and usernames of all the mentioned users in the message", inline=False)
+    help_e.add_field(name="check", value="Checks if the bot is online", inline=False)
+    help_e.add_field(name="clear <num>", value="Deletes the specified number of messages", inline=False)
+    await ctx.send(embed=help_e)
+
 @client.command()
 async def check(ctx):
     await ctx.send("Working :cat:")
