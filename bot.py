@@ -323,7 +323,7 @@ async def on_message_edit(before, after):
 
 @client.event
 async def on_message_delete(message):
-    if message.guild.id == 995429222497652796 and message.channel.id == 996008035757588571:
+    if message.guild.id == 995429222497652796 and message.channel.id == 996666624058867774:
         channel = client.get_channel(996666624058867774)
         embed = discord.Embed(
             colour=discord.Colour.blue(),
