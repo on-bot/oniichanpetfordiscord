@@ -123,54 +123,6 @@ async def ungib(ctx, role: discord.Role):
             await ctx.send(f"Successfully done for {len(successful)} users")
             await ctx.send(f"Couldn't find {len(left_over)} users")
 
-@client.event
-async def on_command_error(ctx, error):
-    # if command has local error handler, return
-    if hasattr(ctx.command, 'on_error'):
-        return
-
-    # get the original exception
-    error = getattr(error, 'original', error)
-
-    if isinstance(error, commands.CommandNotFound):
-        await ctx.send("Command doesnt exist")
-        return
-
-    if isinstance(error, commands.BotMissingPermissions):
-        missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
-        if len(missing) > 2:
-            fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
-        else:
-            fmt = ' and '.join(missing)
-        _message = 'I need the **{}** permission(s) to run this command.'.format(fmt)
-        await ctx.send(_message)
-        return
-
-    if isinstance(error, commands.MissingPermissions):
-        missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
-        if len(missing) > 2:
-            fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
-        else:
-            fmt = ' and '.join(missing)
-        _message = 'You need the **{}** permission(s) to use this command.'.format(fmt)
-        await ctx.send(_message)
-        return
-
-
-    if isinstance(error, commands.CheckFailure):
-        await ctx.send("You do not have permission to use this command.")
-        return
-
-    # ignore all other exception types, but print them to stderr
-    print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
-
-    if isinstance(error, commands.CheckFailure):
-        await ctx.send("You do not have permission to use this command.")
-        return
-
-    # ignore all other exception types, but print them to stderr
-    print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
-
 # @client.command()
 # async def replace(ctx, role: discord.Role, role2: discord.Role):
 #     left_over = []
@@ -246,7 +198,7 @@ async def assign(ctx, role: discord.Role):
 
 @client.command()
 async def list(ctx):
-    if ctx.author.guild_permissions.manage_roles or ctx.author.id == 480361233049059338 or ctx.author.id == 776716251997274112:
+    if ctx.author.guild_permissions.manage_roles:
         if ctx.message.reference:
             message = await ctx.fetch_message(id=ctx.message.reference.message_id)
         else:
@@ -601,10 +553,21 @@ async def on_message(message):
         if message.content == "/resend-roles":
             file = discord.File("crew3_select.png", filename="crew3_select.png")
             await message.reply("Make sure to select Crew3 bot while typing the command",file=file)
+            
     if message.guild.id == 988374126681030656:
         if 'no role' in message.content or "haven't got role" in message.content or "haven't got my role" in message.content:
             await message.reply("go to <#988374129226965012> and type /resend-roles make sure to select crew3 bot to get your roles")
-
+            
+    if message.guild.id == 1039314094081183824:
+        if message.content.lower() == "meow" or message.content.lower()[0:9] == "mimi meow":
+            await message.reply("nyaaa :cat: ")
+        elif message.content.lower()[0:9] == "mimi come":
+            await message.reply("NO")
+        elif message.content.lower() == "i love u" or message.content.lower()[0:13] == "mimi i love u":
+            await message.reply("I love u too :kissing_smiling_eyes: ")
+        elif message.content.lower() == "mimi ttyl" or message.content.lower() == "mimi talk to you later":
+            await message.reply("noooooooo")               
+    
     await client.process_commands(message)
 
     
