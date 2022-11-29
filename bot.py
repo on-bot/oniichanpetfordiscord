@@ -206,39 +206,38 @@ async def assign(ctx, role: discord.Role):
 
 @client.command()
 async def list(ctx):
-    if ctx.author.guild_permissions.manage_roles:
-        if ctx.message.reference:
-            message = await ctx.fetch_message(id=ctx.message.reference.message_id)
-        else:
-            await ctx.send("Please reply to the message")
-            message_id = 991908762992513064
-            message = await ctx.fetch_message(id=message_id)
-        await ctx.send("on it :cat:")
-        left_over = []
-        successful = []
-        author_list = []
-        for item in message.content.split(" "):
-            temp = ""
-            if item.startswith('<@'):
-                for i in item:
-                    if i.isdigit():
-                        temp = temp + i
-                user = ctx.guild.get_member(int(temp))
-                if user == None:
-                    left_over.append(str(user))
-                    continue
-                else:
-                    author_list.append((user.name + '#' + str(user.discriminator)))
-                    successful.append(str(user.id))
-        msg = "**Usernames**\n"
-        for user in author_list:
-            msg = msg + user + "\n"
-        await ctx.author.send(msg)
-        msg = "**UserIDs**\n"
-        for user_id in successful:
-            msg = msg + user_id + "\n"
-        await ctx.author.send(msg)
-        await ctx.send(f"Check DM")
+    if ctx.message.reference:
+        message = await ctx.fetch_message(ctx.message.reference.message_id)
+    else:
+        await ctx.send("Please reply to the message")
+        message_id = 991908762992513064
+        message = await ctx.fetch_message(message_id)
+    await ctx.send("on it :cat:")
+    left_over = []
+    successful = []
+    author_list = []
+    for item in message.content.split(" "):
+        temp = ""
+        if item.startswith('<@'):
+            for i in item:
+                if i.isdigit():
+                    temp = temp + i
+            user = ctx.guild.get_member(int(temp))
+            if user == None:
+                left_over.append(str(user))
+                continue
+            else:
+                author_list.append((user.name + '#' + str(user.discriminator)))
+                successful.append(str(user.id))
+    msg = "**Usernames**\n"
+    for user in author_list:
+        msg = msg + user + "\n"
+    await ctx.author.send(msg)
+    msg = "**UserIDs**\n"
+    for user_id in successful:
+        msg = msg + user_id + "\n"
+    await ctx.author.send(msg)
+    await ctx.send(f"Check DM")
         
 # @client.event
 # async def on_message(message):
