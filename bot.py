@@ -619,7 +619,7 @@ async def on_raw_reaction_add(payload):
                 user = client.get_user(payload.user_id)
                 await message.remove_reaction('🎶', user)
      
- @client.command()
+@client.command()
 async def cat(ctx):
     headers = {
         "x-api-key": os.environ['CAT_API']
