@@ -6,9 +6,15 @@ import sys
 import requests
 import re
 import asyncio
+from pymongo import MongoClient
 
 intents = discord.Intents.all()
 intents.members = True
+
+# MONGO 
+cluster = MongoClient(os.environ['MONGO_TOKEN'])
+db = cluster["discord"]
+collection = db["ethos_xp_data"]
 
 client = commands.Bot(intents=intents, command_prefix='mimi ', case_insensitive=True)
 client.remove_command('help')
@@ -575,6 +581,7 @@ async def on_message(message):
 async def check(ctx):
     await ctx.send("Working :cat:")
     
+    
 @client.command()
 async def say(ctx,*args):
     stc = ""
@@ -611,5 +618,21 @@ async def on_raw_reaction_add(payload):
                 message = await message.edit(content="♪┏(・o･)┛♪")
                 user = client.get_user(payload.user_id)
                 await message.remove_reaction('🎶', user)
+     
+ @client.command()
+async def cat(ctx):
+    headers = {
+        "x-api-key": os.environ['CAT_API']
+    }
+    r = requests.get("https://api.thecatapi.com/v1/images/search/", headers=headers).content
+    r = json.loads(r)
+    await ctx.send(r[0]['url'])
 
+
+@client.command()
+async def selfie(ctx):
+    img_list = collection.find_one({"_id": "selfie"})['selfie_list']
+    await ctx.send(random.choice(img_list))
+
+    
 client.run(os.environ["DISCORD_TOKEN"])
