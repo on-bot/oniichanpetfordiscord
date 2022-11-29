@@ -176,32 +176,18 @@ async def on_ready():
 #     await message.remove_reaction('🤡', user)
 
 
+@client.command()
 async def assign(ctx, role: discord.Role):
-    if ctx.author.guild_permissions.manage_roles or ctx.author.id == 480361233049059338 or ctx.author.id == 776716251997274112:
-        if ctx.message.reference:
-            message = await ctx.fetch_message(id=ctx.message.reference.message_id)
-        else:
-            message_id = 991908762992513064
-            message = await ctx.fetch_message(id=message_id)
-        await ctx.send("on it :cat:")
-        left_over = []
-        successful = []
-        for item in message.content.split(" "):
-            # print(item)
-            temp = ""
-            if item.startswith('<@'):
-                for i in item:
-                    if i.isdigit():
-                        temp = temp + i
-                user = ctx.guild.get_member(int(temp))
-                if user == None:
-                    left_over.append(str(user))
-                    continue
-                else:
-                    await user.add_roles(role)
-                    successful.append(str(user))
-        await ctx.send(f"Successfully done for {len(successful)} users")
-        await ctx.send(f"Couldn't find {len(left_over)} users")
+    if ctx.message.reference:
+        message = await ctx.fetch_message(ctx.message.reference.message_id)
+    else:
+        await ctx.send("Please reply to the message")
+        message_id = 991908762992513064
+        message = await ctx.fetch_message(message_id)
+    for user in message.mentions:
+        await user.add_roles(role)
+        
+    await ctx.send("Done")
 
 
 @client.command()
