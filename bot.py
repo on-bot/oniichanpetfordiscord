@@ -6,6 +6,8 @@ import sys
 import requests
 import re
 import asyncio
+import json
+import random
 from pymongo import MongoClient
 
 intents = discord.Intents.all()
