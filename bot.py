@@ -212,23 +212,13 @@ async def list(ctx):
         await ctx.send("Please reply to the message")
         message_id = 991908762992513064
         message = await ctx.fetch_message(message_id)
-    await ctx.send("on it :cat:")
-    left_over = []
-    successful = []
+
     author_list = []
-    for item in message.content.split(" "):
-        temp = ""
-        if item.startswith('<@'):
-            for i in item:
-                if i.isdigit():
-                    temp = temp + i
-            user = ctx.guild.get_member(int(temp))
-            if user == None:
-                left_over.append(str(user))
-                continue
-            else:
-                author_list.append((user.name + '#' + str(user.discriminator)))
-                successful.append(str(user.id))
+    successful = []
+    for user in message.mentions:
+        author_list.append(user.name+"#"+user.discriminator)
+        successful.append(str(user.id))
+
     msg = "**Usernames**\n"
     for user in author_list:
         msg = msg + user + "\n"
