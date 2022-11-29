@@ -10,7 +10,7 @@ import asyncio
 intents = discord.Intents.all()
 intents.members = True
 
-client = commands.Bot(intents=intents, command_prefix='mimi ')
+client = commands.Bot(intents=intents, command_prefix='mimi ', case_insensitive=True)
 client.remove_command('help')
 allowlist = 970755295942963200
 wl = 983367913706774589
