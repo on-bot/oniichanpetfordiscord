@@ -612,4 +612,22 @@ async def selfie(ctx):
     await ctx.send(random.choice(img_list))
 
     
+    
+@client.command()
+async def join(ctx):
+    async for message in ctx.channel.history(limit=200):
+        if message.author.id == 693167035068317736:
+            if len(message.reactions) != 0:
+                await message.add_reaction(message.reactions[0])
+                await ctx.join("RUMBLE TIMEEEE")
+
+
+@client.command()
+async def unjoin(ctx):
+    async for message in ctx.channel.history(limit=200):
+        if message.author.id == 693167035068317736:
+            if len(message.reactions) != 0:
+                await message.remove_reaction(message.reactions[0], client.get_user(860904195279028245))
+                await ctx.join(":(((")
+    
 client.run(os.environ["DISCORD_TOKEN"])
