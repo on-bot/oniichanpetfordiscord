@@ -722,4 +722,4 @@ async def unjoin(ctx):
                     await ctx.send(":(((")
 
 
-client.run('ODYwOTA0MTk1Mjc5MDI4MjQ1.GJTBer.2t7wyTOk4381LRJ7knli3YEP493uTP0-PgpQC8')
+client.run(=
