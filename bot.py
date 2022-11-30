@@ -550,7 +550,7 @@ async def on_message(message):
             await message.reply("I love u too :kissing_smiling_eyes: ")
         elif message.content.lower() == "mimi ttyl" or message.content.lower() == "mimi talk to you later":
             await message.reply("noooooooo")
-        elif message.content[-1] == "?" and "mimi" in message.content.lower() == "mimi":
+        elif message.content[-1] == "?" and "mimi" in message.content.lower():
             await message.reply(random.choice(["yes", "no", "hmmmm"]))
     
     await client.process_commands(message)
