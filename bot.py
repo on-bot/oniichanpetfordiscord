@@ -18,7 +18,7 @@ command_list = ['.mimi ']
 
 client = commands.Bot(intents=intents, command_prefix=command_list, case_insensitive=True)
 
-cluster = MongoClient("mongodb+srv://ash:DtBlA6DGz1JkP9gC@cluster0.zxfi6gx.mongodb.net/?retryWrites=true&w=majority")
+cluster = MongoClient("mongodb+srv://ash:@cluster0.zxfi6gx.mongodb.net/?retryWrites=true&w=majority")
 db = cluster["discord"]
 collection = db["ethos_xp_data"]
 
