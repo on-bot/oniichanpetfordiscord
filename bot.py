@@ -13,12 +13,15 @@ from pymongo import MongoClient
 intents = discord.Intents.all()
 intents.members = True
 
-# MONGO 
-cluster = MongoClient(os.environ['MONGO_TOKEN'])
+# MONGO
+command_list = ['.mimi ']
+
+client = commands.Bot(intents=intents, command_prefix=command_list, case_insensitive=True)
+
+cluster = MongoClient("mongodb+srv://ash:DtBlA6DGz1JkP9gC@cluster0.zxfi6gx.mongodb.net/?retryWrites=true&w=majority")
 db = cluster["discord"]
 collection = db["ethos_xp_data"]
 
-client = commands.Bot(intents=intents, command_prefix='mimi ', case_insensitive=True)
 client.remove_command('help')
 allowlist = 970755295942963200
 wl = 983367913706774589
@@ -80,6 +83,7 @@ async def gib(ctx, role: discord.Role):
             await ctx.send(f"Successfully done for {len(successful)} users")
             await ctx.send(f"Couldn't find {len(left_over)} users")
 
+
 @client.command()
 async def ungib(ctx, role: discord.Role):
     if ctx.author.guild_permissions.manage_roles or ctx.author.id == 480361233049059338 or ctx.author.id == 776716251997274112:
@@ -131,6 +135,7 @@ async def ungib(ctx, role: discord.Role):
             await ctx.send(f"Successfully done for {len(successful)} users")
             await ctx.send(f"Couldn't find {len(left_over)} users")
 
+
 # @client.command()
 # async def replace(ctx, role: discord.Role, role2: discord.Role):
 #     left_over = []
@@ -167,7 +172,6 @@ async def on_ready():
     print("Bot is ready!")
 
 
-
 # @client.event
 # async def on_raw_reaction_add(payload):
 #     channel = client.get_channel(payload.channel_id)
@@ -186,7 +190,7 @@ async def assign(ctx, role: discord.Role):
         message = await ctx.fetch_message(message_id)
     for user in message.mentions:
         await user.add_roles(role)
-        
+
     await ctx.send("Done")
 
 
@@ -202,7 +206,7 @@ async def list(ctx):
     author_list = []
     successful = []
     for user in message.mentions:
-        author_list.append(user.name+"#"+user.discriminator)
+        author_list.append(user.name + "#" + user.discriminator)
         successful.append(str(user.id))
 
     msg = "**Usernames**\n"
@@ -214,7 +218,8 @@ async def list(ctx):
         msg = msg + user_id + "\n"
     await ctx.author.send(msg)
     await ctx.send(f"Check DM")
-        
+
+
 # @client.event
 # async def on_message(message):
 #     if message.guild.id == 995429222497652796:
@@ -319,7 +324,6 @@ async def list(ctx):
 #     await client.process_commands(message)
 
 
-
 @client.event
 async def on_message_edit(before, after):
     if after.guild.id == 989976603243188224:
@@ -336,7 +340,6 @@ async def on_message_edit(before, after):
                 await after.delete()
 
 
-
 @client.event
 async def on_message_delete(message):
     if message.guild.id == 995429222497652796 and message.channel.id == 996666624058867774:
@@ -349,7 +352,7 @@ async def on_message_delete(message):
         embed.timestamp = datetime.datetime.utcnow()
         embed.set_footer(text='\u200b')
         await channel.send(embed=embed)
- 
+
 
 @client.event
 async def on_member_join(member):
@@ -360,34 +363,48 @@ async def on_member_join(member):
                 "Yakub A.B", "Greedisgood", "David Eth Lord",
                 "haifa wehb", "Muhammad Bin Hakim", "Subarash", "amoudi", "Blessed EDDIE", "Rachel19", "Cheeze",
                 "King Nasr", "King Khalid",
-                "Malek Salman","billionare bird","billionare birds","billionarebirds","billionarebird"]
+                "Malek Salman", "billionare bird", "billionare birds", "billionarebirds", "billionarebird"]
         if any(word.lower() in member.name.lower() for word in mods):
             await member.ban(reason="Impersonating mods")
 
+
 @client.command()
-async def clear(ctx,amount=1):
+async def clear(ctx, amount=1):
     await ctx.message.delete()
     await ctx.channel.purge(limit=amount)
-    await ctx.send(f"Deleted {amount} messages",delete_after=5)
+    await ctx.send(f"Deleted {amount} messages", delete_after=5)
+
 
 @client.command()
 async def help(ctx):
-    help_e = discord.Embed(
-        colour=discord.Colour.orange()
-    )
-    help_e.set_author(name="Bot prefix = mimi ")
-    help_e.add_field(name="gib <Role>", value="It will give chosen role to the list of usernames", inline=False)
-    help_e.add_field(name="ungib <Role>", value="It will remove chosen role from the list of usernames", inline=False)
-    help_e.add_field(name="assign <Role>", value="Reply to the message with this command and it will give the chosen "
-                                                 "role to all the mentioned users in the message",inline=False)
-    help_e.add_field(name="list", value="Reply to the message with this command and it will dm you the "
-                                        "userid and usernames of all the mentioned users in the message", inline=False)
-    help_e.add_field(name="check", value="Checks if the bot is online", inline=False)
-    help_e.add_field(name="clear <num>", value="Deletes the specified number of messages", inline=False)
-    await ctx.send(embed=help_e)
+    if ctx.guild.id == 1039314094081183824:  # ethos
+        knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
+        if knight in ctx.author.roles:
+            valid = True
+        else:
+            valid = False
+    else:
+        valid = True
 
-    
- 
+    if valid:
+        help_e = discord.Embed(
+            colour=discord.Colour.orange()
+        )
+        help_e.set_author(name="Bot prefix = mimi ")
+        help_e.add_field(name="gib <Role>", value="It will give chosen role to the list of usernames", inline=False)
+        help_e.add_field(name="ungib <Role>", value="It will remove chosen role from the list of usernames",
+                         inline=False)
+        help_e.add_field(name="assign <Role>",
+                         value="Reply to the message with this command and it will give the chosen "
+                               "role to all the mentioned users in the message", inline=False)
+        help_e.add_field(name="list", value="Reply to the message with this command and it will dm you the "
+                                            "userid and usernames of all the mentioned users in the message",
+                         inline=False)
+        help_e.add_field(name="check", value="Checks if the bot is online", inline=False)
+        help_e.add_field(name="clear <num>", value="Deletes the specified number of messages", inline=False)
+        await ctx.send(embed=help_e)
+
+
 @client.command()
 async def get_wallets(ctx):
     channel = ctx.channel
@@ -398,22 +415,22 @@ async def get_wallets(ctx):
     for message in messages:
         if message.content.startswith('0x') and message.author.id not in user_ids:
             user_ids.append(message.author.id)
-            user_names.append(message.author.name+'#'+str(message.author.discriminator))
+            user_names.append(message.author.name + '#' + str(message.author.discriminator))
             user_wallets.append(message.content)
     user_ids.reverse()
     user_wallets.reverse()
     user_names.reverse()
-    with open("user_ids.txt",'w',encoding='utf-8') as f:
+    with open("user_ids.txt", 'w', encoding='utf-8') as f:
         for user in user_ids:
-            f.write(str(user)+'\n')
+            f.write(str(user) + '\n')
 
-    with open("user_names.txt",'w',encoding='utf-8') as f:
+    with open("user_names.txt", 'w', encoding='utf-8') as f:
         for user in user_names:
-            f.write(str(user)+'\n')
+            f.write(str(user) + '\n')
 
-    with open("wallets.txt",'w',encoding='utf-8') as f:
+    with open("wallets.txt", 'w', encoding='utf-8') as f:
         for wallet in user_wallets:
-            f.write(str(wallet)+'\n')
+            f.write(str(wallet) + '\n')
 
     file = discord.File("user_ids.txt")
     await ctx.send(file=file, content="IDs of Users")
@@ -426,7 +443,7 @@ async def get_wallets(ctx):
     os.remove('wallets.txt')
 
 
-async def check_roles(guild ,user_id, invite):
+async def check_roles(guild, user_id, invite):
     check_dict = {}
     user = guild.get_member(int(user_id))
     if user is None:
@@ -528,53 +545,89 @@ async def give_role(name, disc, invites):
         five_invites_role = discord.utils.get(guild.roles, id=1033581489796939836)
         await user.add_roles(five_invites_role)
         await check_roles(guild, user.id, 5)
-        
-        
+
+
 @client.event
 async def on_message(message):
-    if message.guild.id == 988374126681030656 and message.channel.id == 988374129226965012:
-        if message.content == "/resend-roles":
-            file = discord.File("crew3_select.png", filename="crew3_select.png")
-            await message.reply("Make sure to select Crew3 bot while typing the command",file=file)
-            
-    if message.guild.id == 988374126681030656:
-        if 'no role' in message.content or "haven't got role" in message.content or "haven't got my role" in message.content:
-            await message.reply("go to <#988374129226965012> and type /resend-roles make sure to select crew3 bot to get your roles")
-            
-    if message.guild.id == 1039314094081183824:
-        if message.content.lower() == "meow" or message.content.lower()[0:9] == "mimi meow":
-            await message.reply("nyaaa :cat: ")
-        elif message.content.lower()[0:9] == "mimi come":
-            await message.reply("NO")
-        elif message.content.lower() == "i love u" or message.content.lower()[0:13] == "mimi i love u":
-            await message.reply("I love u too :kissing_smiling_eyes: ")
-        elif message.content.lower() == "mimi ttyl" or message.content.lower() == "mimi talk to you later":
-            await message.reply("noooooooo")
-        elif message.content[-1] == "?" and "mimi" in message.content.lower():
-            await message.reply(random.choice(["yes", "no", "hmmmm", "meowww", "maybe", "idk", "perhaps"]))
-    
+    if message.guild.id == 1039314094081183824:  # ethos
+        knight = discord.utils.get(message.guild.roles, id=1045279846953132072)
+        if knight in message.author.roles:
+            valid = True
+        else:
+            valid = False
+    else:
+        valid = True
+    if valid:
+        if message.guild.id == 988374126681030656 and message.channel.id == 988374129226965012:
+            if message.content == "/resend-roles":
+                file = discord.File("crew3_select.png", filename="crew3_select.png")
+                await message.reply("Make sure to select Crew3 bot while typing the command", file=file)
+
+        if message.guild.id == 988374126681030656:
+            if 'no role' in message.content or "haven't got role" in message.content or "haven't got my role" in message.content:
+                await message.reply(
+                    "go to <#988374129226965012> and type /resend-roles make sure to select crew3 bot to get your roles")
+
+        if message.guild.id == 1039314094081183824:
+            if message.content.lower() == "meow" or message.content.lower()[0:9] == "mimi meow":
+                await message.reply("nyaaa :cat: ")
+            elif message.content.lower()[0:9] == "mimi come":
+                await message.reply("NO")
+            elif message.content.lower() == "i love u" or message.content.lower()[0:13] == "mimi i love u":
+                await message.reply("I love u too :kissing_smiling_eyes: ")
+            elif message.content.lower() == "mimi ttyl" or message.content.lower() == "mimi talk to you later":
+                await message.reply("noooooooo")
+            elif message.content[-1] == "?" and "mimi" in message.content.lower():
+                await message.reply(random.choice(["yes", "no", "hmmmm", "meowww", "maybe", "idk", "perhaps"]))
+
     await client.process_commands(message)
 
-    
+
 @client.command()
 async def check(ctx):
-    await ctx.send("Working :cat:")
-    
-    
+    if ctx.guild.id == 1039314094081183824:  # ethos
+        knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
+        if knight in ctx.author.roles:
+            valid = True
+        else:
+            valid = False
+    else:
+        valid = True
+    if valid:
+        await ctx.send("Working :cat:")
+
+
 @client.command()
-async def say(ctx,*args):
-    stc = ""
-    for i in args:
-        stc = stc + i + " "
-    await ctx.send(stc)
-    
-    
+async def say(ctx, *args):
+    if ctx.guild.id == 1039314094081183824:  # ethos
+        knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
+        if knight in ctx.author.roles:
+            valid = True
+        else:
+            valid = False
+    else:
+        valid = True
+    if valid:
+        stc = ""
+        for i in args:
+            stc = stc + i + " "
+        await ctx.send(stc)
+
+
 @client.command()
 async def dance(ctx):
-    message = await ctx.send("♪┏(・o･)┛♪")
-    await message.add_reaction("🎶")
-    
-    
+    if ctx.guild.id == 1039314094081183824:  # ethos
+        knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
+        if knight in ctx.author.roles:
+            valid = True
+        else:
+            valid = False
+    else:
+        valid = True
+    if valid:
+        message = await ctx.send("♪┏(・o･)┛♪")
+        await message.add_reaction("🎶")
+
 
 @client.event
 async def on_raw_reaction_add(payload):
@@ -597,39 +650,76 @@ async def on_raw_reaction_add(payload):
                 message = await message.edit(content="♪┏(・o･)┛♪")
                 user = client.get_user(payload.user_id)
                 await message.remove_reaction('🎶', user)
-     
+
+
 @client.command()
 async def cat(ctx):
-    headers = {
-        "x-api-key": os.environ['CAT_API']
-    }
-    r = requests.get("https://api.thecatapi.com/v1/images/search/", headers=headers).content
-    r = json.loads(r)
-    await ctx.send(r[0]['url'])
+    if ctx.guild.id == 1039314094081183824:  # ethos
+        knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
+        if knight in ctx.author.roles:
+            valid = True
+        else:
+            valid = False
+    else:
+        valid = True
+    if valid:
+        headers = {
+            "x-api-key": os.environ['CAT_API']
+        }
+        r = requests.get("https://api.thecatapi.com/v1/images/search/", headers=headers).content
+        r = json.loads(r)
+        await ctx.send(r[0]['url'])
 
 
 @client.command()
 async def selfie(ctx):
-    img_list = collection.find_one({"_id": "selfie"})['selfie_list']
-    await ctx.send(random.choice(img_list))
+    if ctx.guild.id == 1039314094081183824:  # ethos
+        knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
+        if knight in ctx.author.roles:
+            valid = True
+        else:
+            valid = False
+    else:
+        valid = True
+    if valid:
+        img_list = collection.find_one({"_id": "selfie"})['selfie_list']
+        await ctx.send(random.choice(img_list))
 
-    
-    
+
 @client.command()
 async def join(ctx):
-    async for message in ctx.channel.history(limit=200):
-        if message.author.id == 693167035068317736:
-            if len(message.reactions) != 0:
-                await message.add_reaction(message.reactions[0])
-                await ctx.send("RUMBLE TIMEEEE")
+    if ctx.guild.id == 1039314094081183824:  # ethos
+        knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
+        if knight in ctx.author.roles:
+            valid = True
+        else:
+            valid = False
+    else:
+        valid = True
+    if valid:
+        async for message in ctx.channel.history(limit=200):
+            if message.author.id == 693167035068317736:
+                if len(message.reactions) != 0:
+                    await message.add_reaction(message.reactions[0])
+                    await ctx.send("RUMBLE TIMEEEE")
 
 
 @client.command()
 async def unjoin(ctx):
-    async for message in ctx.channel.history(limit=200):
-        if message.author.id == 693167035068317736:
-            if len(message.reactions) != 0:
-                await message.remove_reaction(message.reactions[0], client.get_user(860904195279028245))
-                await ctx.send(":(((")
-    
-client.run(os.environ["DISCORD_TOKEN"])
+    if ctx.guild.id == 1039314094081183824:  # ethos
+        knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
+        if knight in ctx.author.roles:
+            valid = True
+        else:
+            valid = False
+    else:
+        valid = True
+    if valid:
+        async for message in ctx.channel.history(limit=200):
+            if message.author.id == 693167035068317736:
+                if len(message.reactions) != 0:
+                    await message.remove_reaction(message.reactions[0], client.get_user(860904195279028245))
+                    await ctx.send(":(((")
+
+
+client.run('ODYwOTA0MTk1Mjc5MDI4MjQ1.GJTBer.2t7wyTOk4381LRJ7knli3YEP493uTP0-PgpQC8')
