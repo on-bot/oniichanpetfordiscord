@@ -14,11 +14,11 @@ intents = discord.Intents.all()
 intents.members = True
 
 # MONGO
-command_list = ['.mimi ']
+command_list = ['mimi ']
 
 client = commands.Bot(intents=intents, command_prefix=command_list, case_insensitive=True)
 
-cluster = MongoClient("mongodb+srv://ash:@cluster0.zxfi6gx.mongodb.net/?retryWrites=true&w=majority")
+cluster = MongoClient(os.environ['MONGO_TOKEN'])
 db = cluster["discord"]
 collection = db["ethos_xp_data"]
 
@@ -722,4 +722,4 @@ async def unjoin(ctx):
                     await ctx.send(":(((")
 
 
-client.run(=
+client.run(os.environ["DISCORD_TOKEN"])
