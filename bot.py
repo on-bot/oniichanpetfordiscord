@@ -551,7 +551,7 @@ async def on_message(message):
         elif message.content.lower() == "mimi ttyl" or message.content.lower() == "mimi talk to you later":
             await message.reply("noooooooo")
         elif message.content[-1] == "?" and "mimi" in message.content.lower():
-            await message.reply(random.choice(["yes", "no", "hmmmm"]))
+            await message.reply(random.choice(["yes", "no", "hmmmm", "meowww", "maybe", "idk", "perhaps"]))
     
     await client.process_commands(message)
 
