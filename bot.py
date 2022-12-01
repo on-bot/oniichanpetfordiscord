@@ -14,9 +14,9 @@ intents = discord.Intents.all()
 intents.members = True
 
 # MONGO
-command_list = ['mimi ']
+command_list = ['mimi ','Mimi ']
 
-client = commands.Bot(intents=intents, command_prefix=command_list, case_insensitive=True)
+client = commands.Bot(intents=intents, command_prefix=command_list)
 
 cluster = MongoClient(os.environ['MONGO_TOKEN'])
 db = cluster["discord"]
