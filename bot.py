@@ -20,7 +20,7 @@ client = commands.Bot(intents=intents, command_prefix=command_list, case_insensi
 
 cluster = MongoClient(os.environ['MONGO_TOKEN'])
 db = cluster["discord"]
-collection = db["ethos_xp_data"]
+collection = db["ethos_xp_cat"]
 
 client.remove_command('help')
 allowlist = 970755295942963200
