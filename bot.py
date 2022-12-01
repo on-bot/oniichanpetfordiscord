@@ -32,6 +32,13 @@ testsorvor = 744107902587109396
 whitelisted_kitten = 901054830540386354
 
 
+def check_list(list_1, list_2):
+    for a in list_1:
+        if a in list_2:
+            return True
+    return False
+
+
 @client.command()
 async def gib(ctx, role: discord.Role):
     if ctx.author.guild_permissions.manage_roles or ctx.author.id == 480361233049059338 or ctx.author.id == 776716251997274112:
@@ -368,23 +375,19 @@ async def on_member_join(member):
             await member.ban(reason="Impersonating mods")
 
 
-@client.command()
-async def clear(ctx, amount=1):
-    await ctx.message.delete()
-    await ctx.channel.purge(limit=amount)
-    await ctx.send(f"Deleted {amount} messages", delete_after=5)
+# @client.command()
+# async def clear(ctx, amount=1):
+#     await ctx.message.delete()
+#     await ctx.channel.purge(limit=amount+1)
+#     await ctx.send(f"Deleted {amount} messages", delete_after=5)
 
 
 @client.command()
 async def help(ctx):
     if ctx.guild.id == 1039314094081183824:  # ethos
-        knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
-        if knight in ctx.author.roles:
-            valid = True
-        else:
-            valid = False
+        valid = False
     else:
-        valid = True
+        valid = False
 
     if valid:
         help_e = discord.Embed(
@@ -551,10 +554,17 @@ async def give_role(name, disc, invites):
 async def on_message(message):
     if message.guild.id == 1039314094081183824:  # ethos
         knight = discord.utils.get(message.guild.roles, id=1045279846953132072)
-        if knight in message.author.roles:
+        bishop = discord.utils.get(message.guild.roles, id=1045280247903424582)
+        rook = discord.utils.get(message.guild.roles, id=1045279621958090872)
+        queen = discord.utils.get(message.guild.roles, id=1045274556379701259)
+        king = discord.utils.get(message.guild.roles, id=1045274429141299250)
+        role_list = [knight, bishop, rook, queen, king]
+
+        if check_list(role_list, message.author.roles):
             valid = True
         else:
             valid = False
+
     else:
         valid = True
     if valid:
@@ -587,12 +597,20 @@ async def on_message(message):
 async def check(ctx):
     if ctx.guild.id == 1039314094081183824:  # ethos
         knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
-        if knight in ctx.author.roles:
+        bishop = discord.utils.get(ctx.guild.roles, id=1045280247903424582)
+        rook = discord.utils.get(ctx.guild.roles, id=1045279621958090872)
+        queen = discord.utils.get(ctx.guild.roles, id=1045274556379701259)
+        king = discord.utils.get(ctx.guild.roles, id=1045274429141299250)
+        role_list = [knight, bishop, rook, queen, king]
+
+        if check_list(role_list, ctx.author.roles):
             valid = True
         else:
             valid = False
+
     else:
         valid = True
+
     if valid:
         await ctx.send("Working :cat:")
 
@@ -601,12 +619,19 @@ async def check(ctx):
 async def say(ctx, *args):
     if ctx.guild.id == 1039314094081183824:  # ethos
         knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
-        if knight in ctx.author.roles:
+        bishop = discord.utils.get(ctx.guild.roles, id=1045280247903424582)
+        rook = discord.utils.get(ctx.guild.roles, id=1045279621958090872)
+        queen = discord.utils.get(ctx.guild.roles, id=1045274556379701259)
+        king = discord.utils.get(ctx.guild.roles, id=1045274429141299250)
+        role_list = [knight, bishop, rook, queen, king]
+
+        if check_list(role_list, ctx.author.roles):
             valid = True
         else:
             valid = False
     else:
         valid = True
+
     if valid:
         stc = ""
         for i in args:
@@ -618,12 +643,19 @@ async def say(ctx, *args):
 async def dance(ctx):
     if ctx.guild.id == 1039314094081183824:  # ethos
         knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
-        if knight in ctx.author.roles:
+        bishop = discord.utils.get(ctx.guild.roles, id=1045280247903424582)
+        rook = discord.utils.get(ctx.guild.roles, id=1045279621958090872)
+        queen = discord.utils.get(ctx.guild.roles, id=1045274556379701259)
+        king = discord.utils.get(ctx.guild.roles, id=1045274429141299250)
+        role_list = [knight, bishop, rook, queen, king]
+
+        if check_list(role_list, ctx.author.roles):
             valid = True
         else:
             valid = False
     else:
         valid = True
+
     if valid:
         message = await ctx.send("♪┏(・o･)┛♪")
         await message.add_reaction("🎶")
@@ -656,12 +688,19 @@ async def on_raw_reaction_add(payload):
 async def cat(ctx):
     if ctx.guild.id == 1039314094081183824:  # ethos
         knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
-        if knight in ctx.author.roles:
+        bishop = discord.utils.get(ctx.guild.roles, id=1045280247903424582)
+        rook = discord.utils.get(ctx.guild.roles, id=1045279621958090872)
+        queen = discord.utils.get(ctx.guild.roles, id=1045274556379701259)
+        king = discord.utils.get(ctx.guild.roles, id=1045274429141299250)
+        role_list = [knight, bishop, rook, queen, king]
+
+        if check_list(role_list, ctx.author.roles):
             valid = True
         else:
             valid = False
     else:
         valid = True
+
     if valid:
         headers = {
             "x-api-key": os.environ['CAT_API']
@@ -675,12 +714,19 @@ async def cat(ctx):
 async def selfie(ctx):
     if ctx.guild.id == 1039314094081183824:  # ethos
         knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
-        if knight in ctx.author.roles:
+        bishop = discord.utils.get(ctx.guild.roles, id=1045280247903424582)
+        rook = discord.utils.get(ctx.guild.roles, id=1045279621958090872)
+        queen = discord.utils.get(ctx.guild.roles, id=1045274556379701259)
+        king = discord.utils.get(ctx.guild.roles, id=1045274429141299250)
+        role_list = [knight, bishop, rook, queen, king]
+
+        if check_list(role_list, ctx.author.roles):
             valid = True
         else:
             valid = False
     else:
         valid = True
+
     if valid:
         img_list = collection.find_one({"_id": "selfie"})['selfie_list']
         await ctx.send(random.choice(img_list))
@@ -690,12 +736,19 @@ async def selfie(ctx):
 async def join(ctx):
     if ctx.guild.id == 1039314094081183824:  # ethos
         knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
-        if knight in ctx.author.roles:
+        bishop = discord.utils.get(ctx.guild.roles, id=1045280247903424582)
+        rook = discord.utils.get(ctx.guild.roles, id=1045279621958090872)
+        queen = discord.utils.get(ctx.guild.roles, id=1045274556379701259)
+        king = discord.utils.get(ctx.guild.roles, id=1045274429141299250)
+        role_list = [knight, bishop, rook, queen, king]
+
+        if check_list(role_list, ctx.author.roles):
             valid = True
         else:
             valid = False
     else:
         valid = True
+
     if valid:
         async for message in ctx.channel.history(limit=200):
             if message.author.id == 693167035068317736:
@@ -708,12 +761,19 @@ async def join(ctx):
 async def unjoin(ctx):
     if ctx.guild.id == 1039314094081183824:  # ethos
         knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
-        if knight in ctx.author.roles:
+        bishop = discord.utils.get(ctx.guild.roles, id=1045280247903424582)
+        rook = discord.utils.get(ctx.guild.roles, id=1045279621958090872)
+        queen = discord.utils.get(ctx.guild.roles, id=1045274556379701259)
+        king = discord.utils.get(ctx.guild.roles, id=1045274429141299250)
+        role_list = [knight, bishop, rook, queen, king]
+
+        if check_list(role_list, ctx.author.roles):
             valid = True
         else:
             valid = False
     else:
         valid = True
+
     if valid:
         async for message in ctx.channel.history(limit=200):
             if message.author.id == 693167035068317736:
