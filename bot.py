@@ -780,6 +780,21 @@ async def unjoin(ctx):
                 if len(message.reactions) != 0:
                     await message.remove_reaction(message.reactions[0], client.get_user(860904195279028245))
                     await ctx.send(":(((")
+                 
 
+@client.command()
+async def add_to_selfie(ctx, link):
+    try:
+        if link[0:3] == '```':
+            target = collection.find_one({"_id": "selfie"})['selfie_list']
+            print("here")
+            target.append(link[3:-3])
+            collection.update_one({"_id": "selfie"}, {"$set": {"selfie_list": target}})
+            await ctx.send("Added successfully!!")
+        else:
+            await ctx.send("Wrong formate")
+    except:
+        await ctx.send("Error while adding")
+ 
 
 client.run(os.environ["DISCORD_TOKEN"])
