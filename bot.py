@@ -558,7 +558,8 @@ async def on_message(message):
         rook = discord.utils.get(message.guild.roles, id=1045279621958090872)
         queen = discord.utils.get(message.guild.roles, id=1045274556379701259)
         king = discord.utils.get(message.guild.roles, id=1045274429141299250)
-        role_list = [knight, bishop, rook, queen, king]
+        server_booster = discord.utils.get(message.guild.roles, id=1040681728232136795)
+        role_list = [knight, bishop, rook, queen, king, server_booster]
 
         if check_list(role_list, message.author.roles):
             valid = True
@@ -601,7 +602,8 @@ async def check(ctx):
         rook = discord.utils.get(ctx.guild.roles, id=1045279621958090872)
         queen = discord.utils.get(ctx.guild.roles, id=1045274556379701259)
         king = discord.utils.get(ctx.guild.roles, id=1045274429141299250)
-        role_list = [knight, bishop, rook, queen, king]
+        server_booster = discord.utils.get(ctx.guild.roles, id=1040681728232136795)
+        role_list = [knight, bishop, rook, queen, king, server_booster]
 
         if check_list(role_list, ctx.author.roles):
             valid = True
@@ -623,7 +625,8 @@ async def say(ctx, *args):
         rook = discord.utils.get(ctx.guild.roles, id=1045279621958090872)
         queen = discord.utils.get(ctx.guild.roles, id=1045274556379701259)
         king = discord.utils.get(ctx.guild.roles, id=1045274429141299250)
-        role_list = [knight, bishop, rook, queen, king]
+        server_booster = discord.utils.get(ctx.guild.roles, id=1040681728232136795)
+        role_list = [knight, bishop, rook, queen, king, server_booster]
 
         if check_list(role_list, ctx.author.roles):
             valid = True
@@ -647,7 +650,8 @@ async def dance(ctx):
         rook = discord.utils.get(ctx.guild.roles, id=1045279621958090872)
         queen = discord.utils.get(ctx.guild.roles, id=1045274556379701259)
         king = discord.utils.get(ctx.guild.roles, id=1045274429141299250)
-        role_list = [knight, bishop, rook, queen, king]
+        server_booster = discord.utils.get(ctx.guild.roles, id=1040681728232136795)
+        role_list = [knight, bishop, rook, queen, king, server_booster]
 
         if check_list(role_list, ctx.author.roles):
             valid = True
@@ -692,7 +696,8 @@ async def cat(ctx):
         rook = discord.utils.get(ctx.guild.roles, id=1045279621958090872)
         queen = discord.utils.get(ctx.guild.roles, id=1045274556379701259)
         king = discord.utils.get(ctx.guild.roles, id=1045274429141299250)
-        role_list = [knight, bishop, rook, queen, king]
+        server_booster = discord.utils.get(ctx.guild.roles, id=1040681728232136795)
+        role_list = [knight, bishop, rook, queen, king, server_booster]
 
         if check_list(role_list, ctx.author.roles):
             valid = True
@@ -718,7 +723,8 @@ async def selfie(ctx):
         rook = discord.utils.get(ctx.guild.roles, id=1045279621958090872)
         queen = discord.utils.get(ctx.guild.roles, id=1045274556379701259)
         king = discord.utils.get(ctx.guild.roles, id=1045274429141299250)
-        role_list = [knight, bishop, rook, queen, king]
+        server_booster = discord.utils.get(ctx.guild.roles, id=1040681728232136795)
+        role_list = [knight, bishop, rook, queen, king, server_booster]
 
         if check_list(role_list, ctx.author.roles):
             valid = True
@@ -740,7 +746,8 @@ async def join(ctx):
         rook = discord.utils.get(ctx.guild.roles, id=1045279621958090872)
         queen = discord.utils.get(ctx.guild.roles, id=1045274556379701259)
         king = discord.utils.get(ctx.guild.roles, id=1045274429141299250)
-        role_list = [knight, bishop, rook, queen, king]
+        server_booster = discord.utils.get(ctx.guild.roles, id=1040681728232136795)
+        role_list = [knight, bishop, rook, queen, king, server_booster]
 
         if check_list(role_list, ctx.author.roles):
             valid = True
@@ -765,7 +772,8 @@ async def unjoin(ctx):
         rook = discord.utils.get(ctx.guild.roles, id=1045279621958090872)
         queen = discord.utils.get(ctx.guild.roles, id=1045274556379701259)
         king = discord.utils.get(ctx.guild.roles, id=1045274429141299250)
-        role_list = [knight, bishop, rook, queen, king]
+        server_booster = discord.utils.get(ctx.guild.roles, id=1040681728232136795)
+        role_list = [knight, bishop, rook, queen, king, server_booster]
 
         if check_list(role_list, ctx.author.roles):
             valid = True
