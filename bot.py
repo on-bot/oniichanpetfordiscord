@@ -411,7 +411,7 @@ async def help(ctx):
 @client.command()
 async def get_wallets(ctx):
     channel = ctx.channel
-    messages = await channel.history(limit=1000).flatten()
+    messages = await channel.history(limit=1000)
     user_ids = []
     user_wallets = []
     user_names = []
