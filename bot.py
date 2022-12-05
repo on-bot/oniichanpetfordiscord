@@ -411,11 +411,10 @@ async def help(ctx):
 @client.command()
 async def get_wallets(ctx):
     channel = ctx.channel
-    messages = await channel.history(limit=1000)
     user_ids = []
     user_wallets = []
     user_names = []
-    for message in messages:
+    async for message in channel.history(limit=1000):
         if message.content.startswith('0x') and message.author.id not in user_ids:
             user_ids.append(message.author.id)
             user_names.append(message.author.name + '#' + str(message.author.discriminator))
