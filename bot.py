@@ -804,4 +804,90 @@ async def add_to_selfie(ctx, link):
         await ctx.send("Error while adding")
  
 
+async def winner_embed(ctx, text):
+    embed = discord.Embed(colour=discord.Colour.green())
+    embed.set_author(name=text)
+    await ctx.reply(embed=embed)
+
+
+async def loser_embed(ctx, text):
+    embed = discord.Embed(colour=discord.Colour.red())
+    embed.set_author(name=text)
+    await ctx.reply(embed=embed)
+
+
+async def draw_embed(ctx, text):
+    embed = discord.Embed(colour=discord.Colour.dark_gray())
+    embed.set_author(name=text)
+    await ctx.reply(embed=embed)
+
+
+async def blue_embed(msg, text):
+    embed = discord.Embed(colour=discord.Colour.blue())
+    embed.set_author(name=text)
+    msg = await msg.reply(embed=embed)
+    return msg
+
+
+@client.command()
+async def rps(ctx):
+    if ctx.guild.id == 1039314094081183824:  # ethos
+        knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
+        bishop = discord.utils.get(ctx.guild.roles, id=1045280247903424582)
+        rook = discord.utils.get(ctx.guild.roles, id=1045279621958090872)
+        queen = discord.utils.get(ctx.guild.roles, id=1045274556379701259)
+        king = discord.utils.get(ctx.guild.roles, id=1045274429141299250)
+        server_booster = discord.utils.get(ctx.guild.roles, id=1040681728232136795)
+        role_list = [knight, bishop, rook, queen, king, server_booster]
+
+        if check_list(role_list, ctx.author.roles):
+            valid = True
+        else:
+            valid = False
+    else:
+        valid = True
+
+    if valid:
+        sent_msg = await blue_embed(ctx.message, 'Rock, paper, scissors!')
+        await sent_msg.add_reaction('✊')
+        await sent_msg.add_reaction('✋')
+        await sent_msg.add_reaction('✌')
+    
+        # wait for user reaction
+        def check(reaction, user):
+            return user == ctx.message.author and str(reaction.emoji) in ['✊', '✋', '✌']
+    
+        try:
+            reaction, user = await client.wait_for('reaction_add', timeout=60.0, check=check)
+        except asyncio.TimeoutError:
+            await ctx.message.reply('Sorry, you took too long to play.')
+            return
+    
+        # determine winner
+        choice = str(reaction.emoji)
+        opponent_choice = random.choice(['✊', '✋', '✌'])
+        if choice == '✊':
+            if opponent_choice == '✋':
+                await loser_embed(ctx, 'You lost! Paper beats rock. :) ')
+            elif opponent_choice == '✌':
+                await winner_embed(ctx, 'You won! Rock beats scissors. :( ')
+            else:
+                await draw_embed(ctx, 'It\'s a tie! :/')
+    
+        elif choice == '✋':
+            if opponent_choice == '✌':
+                await loser_embed(ctx, 'You lost! Scissors beats paper. :) ')
+            elif opponent_choice == '✊':
+                await winner_embed(ctx, 'You won! Paper beats rock. :( ')
+            else:
+                await draw_embed(ctx, 'It\'s a tie! :/')
+    
+        elif choice == '✌':
+            if opponent_choice == '✊':
+                await loser_embed(ctx, 'You lost! Rock beats scissors. :) ')
+            elif opponent_choice == '✋':
+                await winner_embed(ctx, 'You won! Scissors beats paper. :( ')
+            else:
+                await draw_embed(ctx, 'It\'s a tie! :/')
+
 client.run(os.environ["DISCORD_TOKEN"])
