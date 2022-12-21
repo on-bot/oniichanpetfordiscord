@@ -31,6 +31,14 @@ dead = 976680040098062387
 testsorvor = 744107902587109396
 whitelisted_kitten = 901054830540386354
 
+# Ethos
+knight_id = 1054447274106835064
+bishop_id = 1054447083131777064
+rook_id = 1054449181613367398
+king_id = 1054446960100245514
+queen_id = 1054446386663395380
+server_booster_id = 1040681728232136795
+
 
 def check_list(list_1, list_2):
     for a in list_1:
@@ -619,12 +627,12 @@ async def check(ctx):
 @client.command()
 async def say(ctx, *args):
     if ctx.guild.id == 1039314094081183824:  # ethos
-        knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
-        bishop = discord.utils.get(ctx.guild.roles, id=1045280247903424582)
-        rook = discord.utils.get(ctx.guild.roles, id=1045279621958090872)
-        queen = discord.utils.get(ctx.guild.roles, id=1045274556379701259)
-        king = discord.utils.get(ctx.guild.roles, id=1045274429141299250)
-        server_booster = discord.utils.get(ctx.guild.roles, id=1040681728232136795)
+        knight = discord.utils.get(ctx.guild.roles, id=knight_id)
+        bishop = discord.utils.get(ctx.guild.roles, id=bishop_id)
+        rook = discord.utils.get(ctx.guild.roles, id=rook_id)
+        queen = discord.utils.get(ctx.guild.roles, id=queen_id)
+        king = discord.utils.get(ctx.guild.roles, id=king_id)
+        server_booster = discord.utils.get(ctx.guild.roles, id=server_booster_id)
         role_list = [knight, bishop, rook, queen, king, server_booster]
 
         if check_list(role_list, ctx.author.roles):
@@ -690,12 +698,12 @@ async def on_raw_reaction_add(payload):
 @client.command()
 async def cat(ctx):
     if ctx.guild.id == 1039314094081183824:  # ethos
-        knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
-        bishop = discord.utils.get(ctx.guild.roles, id=1045280247903424582)
-        rook = discord.utils.get(ctx.guild.roles, id=1045279621958090872)
-        queen = discord.utils.get(ctx.guild.roles, id=1045274556379701259)
-        king = discord.utils.get(ctx.guild.roles, id=1045274429141299250)
-        server_booster = discord.utils.get(ctx.guild.roles, id=1040681728232136795)
+        knight = discord.utils.get(ctx.guild.roles, id=knight_id)
+        bishop = discord.utils.get(ctx.guild.roles, id=bishop_id)
+        rook = discord.utils.get(ctx.guild.roles, id=rook_id)
+        queen = discord.utils.get(ctx.guild.roles, id=queen_id)
+        king = discord.utils.get(ctx.guild.roles, id=king_id)
+        server_booster = discord.utils.get(ctx.guild.roles, id=server_booster_id)
         role_list = [knight, bishop, rook, queen, king, server_booster]
 
         if check_list(role_list, ctx.author.roles):
@@ -717,12 +725,12 @@ async def cat(ctx):
 @client.command()
 async def selfie(ctx):
     if ctx.guild.id == 1039314094081183824:  # ethos
-        knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
-        bishop = discord.utils.get(ctx.guild.roles, id=1045280247903424582)
-        rook = discord.utils.get(ctx.guild.roles, id=1045279621958090872)
-        queen = discord.utils.get(ctx.guild.roles, id=1045274556379701259)
-        king = discord.utils.get(ctx.guild.roles, id=1045274429141299250)
-        server_booster = discord.utils.get(ctx.guild.roles, id=1040681728232136795)
+        knight = discord.utils.get(ctx.guild.roles, id=knight_id)
+        bishop = discord.utils.get(ctx.guild.roles, id=bishop_id)
+        rook = discord.utils.get(ctx.guild.roles, id=rook_id)
+        queen = discord.utils.get(ctx.guild.roles, id=queen_id)
+        king = discord.utils.get(ctx.guild.roles, id=king_id)
+        server_booster = discord.utils.get(ctx.guild.roles, id=server_booster_id)
         role_list = [knight, bishop, rook, queen, king, server_booster]
 
         if check_list(role_list, ctx.author.roles):
@@ -740,12 +748,12 @@ async def selfie(ctx):
 @client.command()
 async def join(ctx):
     if ctx.guild.id == 1039314094081183824:  # ethos
-        knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
-        bishop = discord.utils.get(ctx.guild.roles, id=1045280247903424582)
-        rook = discord.utils.get(ctx.guild.roles, id=1045279621958090872)
-        queen = discord.utils.get(ctx.guild.roles, id=1045274556379701259)
-        king = discord.utils.get(ctx.guild.roles, id=1045274429141299250)
-        server_booster = discord.utils.get(ctx.guild.roles, id=1040681728232136795)
+        knight = discord.utils.get(ctx.guild.roles, id=knight_id)
+        bishop = discord.utils.get(ctx.guild.roles, id=bishop_id)
+        rook = discord.utils.get(ctx.guild.roles, id=rook_id)
+        queen = discord.utils.get(ctx.guild.roles, id=queen_id)
+        king = discord.utils.get(ctx.guild.roles, id=king_id)
+        server_booster = discord.utils.get(ctx.guild.roles, id=server_booster_id)
         role_list = [knight, bishop, rook, queen, king, server_booster]
 
         if check_list(role_list, ctx.author.roles):
@@ -766,12 +774,12 @@ async def join(ctx):
 @client.command()
 async def unjoin(ctx):
     if ctx.guild.id == 1039314094081183824:  # ethos
-        knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
-        bishop = discord.utils.get(ctx.guild.roles, id=1045280247903424582)
-        rook = discord.utils.get(ctx.guild.roles, id=1045279621958090872)
-        queen = discord.utils.get(ctx.guild.roles, id=1045274556379701259)
-        king = discord.utils.get(ctx.guild.roles, id=1045274429141299250)
-        server_booster = discord.utils.get(ctx.guild.roles, id=1040681728232136795)
+        knight = discord.utils.get(ctx.guild.roles, id=knight_id)
+        bishop = discord.utils.get(ctx.guild.roles, id=bishop_id)
+        rook = discord.utils.get(ctx.guild.roles, id=rook_id)
+        queen = discord.utils.get(ctx.guild.roles, id=queen_id)
+        king = discord.utils.get(ctx.guild.roles, id=king_id)
+        server_booster = discord.utils.get(ctx.guild.roles, id=server_booster_id)
         role_list = [knight, bishop, rook, queen, king, server_booster]
 
         if check_list(role_list, ctx.author.roles):
@@ -832,12 +840,12 @@ async def blue_embed(msg, text):
 @client.command()
 async def rps(ctx):
     if ctx.guild.id == 1039314094081183824:  # ethos
-        knight = discord.utils.get(ctx.guild.roles, id=1045279846953132072)
-        bishop = discord.utils.get(ctx.guild.roles, id=1045280247903424582)
-        rook = discord.utils.get(ctx.guild.roles, id=1045279621958090872)
-        queen = discord.utils.get(ctx.guild.roles, id=1045274556379701259)
-        king = discord.utils.get(ctx.guild.roles, id=1045274429141299250)
-        server_booster = discord.utils.get(ctx.guild.roles, id=1040681728232136795)
+        knight = discord.utils.get(ctx.guild.roles, id=knight_id)
+        bishop = discord.utils.get(ctx.guild.roles, id=bishop_id)
+        rook = discord.utils.get(ctx.guild.roles, id=rook_id)
+        queen = discord.utils.get(ctx.guild.roles, id=queen_id)
+        king = discord.utils.get(ctx.guild.roles, id=king_id)
+        server_booster = discord.utils.get(ctx.guild.roles, id=server_booster_id)
         role_list = [knight, bishop, rook, queen, king, server_booster]
 
         if check_list(role_list, ctx.author.roles):
