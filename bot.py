@@ -645,7 +645,7 @@ async def say(ctx, *args):
     if valid:
         stc = ""
         for i in args:
-            if ctx.user != "ash":
+            if ctx.author.name != "!ash":
                 if i.lower() == "uwu":
                     await ctx.send("i only uwu to ash")
                     return
