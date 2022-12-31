@@ -645,6 +645,9 @@ async def say(ctx, *args):
     if valid:
         stc = ""
         for i in args:
+            if i.lower() == "uwu":
+                await ctx.send("i only uwu to ash")
+                return
             stc = stc + i + " "
         await ctx.send(stc)
 
