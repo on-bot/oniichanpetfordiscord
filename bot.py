@@ -903,11 +903,11 @@ async def rps(ctx):
                 await draw_embed(ctx, 'It\'s a tie! :/')
 
                 
-@client.command()
-async def roll(ctx, num_dice: int, num_sides: int):
-    # Roll the dice and sum the results
-    result = sum(random.randint(1, num_sides) for _ in range(num_dice))
-    await ctx.send(f'You rolled {result}')
+# @client.command()
+# async def roll(ctx, num_dice: int, num_sides: int):
+#     # Roll the dice and sum the results
+#     result = sum(random.randint(1, num_sides) for _ in range(num_dice))
+#     await ctx.send(f'You rolled {result}')
     
     
 client.run(os.environ["DISCORD_TOKEN"])
